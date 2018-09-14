@@ -156,3 +156,47 @@ export const Button = styled.button`
     border-radius: 2px;
   }
 `;
+
+export const PictureContainer = styled.div`
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 60px;
+  border: 5px white solid;
+  background: ${theme.primaryDark};
+  overflow: hidden;
+  cursor: pointer;
+  transform: translate(0%, -80%);
+  box-sizing: border-box;
+`;
+
+export const ProfilePicture = styled.div`
+  width: 60px;
+  height: 60px;
+  background: url(${props => props.source});
+  background-size: contain;
+  transition: all 0.5s ease;
+  align-items: center;
+  justify-content: center;
+
+  &:after {
+    content: '+';
+    width: 100%;
+    height: 100%;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    font-size: 35px;
+    text-align: center;
+    line-height: 60px;
+    opacity: 0;
+    transition: all 0.5s ease;
+  }
+
+  &:hover {
+    &:after {
+      opacity: 1;
+    }
+  }
+`;
