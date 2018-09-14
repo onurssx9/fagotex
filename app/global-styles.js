@@ -4,8 +4,9 @@ import { injectGlobal } from 'styled-components';
 injectGlobal`
   html,
   body {
-    height: 100%;
     width: 100%;
+    height: 100%;
+    overflow: hidden;
   }
 
   body {
@@ -17,14 +18,16 @@ injectGlobal`
   }
 
   #app {
-    background-color: #fafafa;
-    min-height: 100%;
-    min-width: 100%;
+    height: 100%;
   }
 
   p,
   label {
     font-family: Georgia, Times, 'Times New Roman', serif;
     line-height: 1.5em;
+  }
+
+  div {
+    box-sizing: border-box;
   }
 `;

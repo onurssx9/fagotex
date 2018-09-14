@@ -10,6 +10,7 @@ import { setName } from './actions';
 import { getUserName } from './selectors';
 import reducer from './reducers';
 import saga from './sagas';
+import Header from './Header';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Login extends React.PureComponent {
@@ -18,7 +19,7 @@ export class Login extends React.PureComponent {
   }
 
   render() {
-    return <div>{this.props.userName}</div>;
+    return <Header>{this.props.userName}</Header>;
   }
 }
 
