@@ -16,7 +16,7 @@ import {
 class Header extends React.PureComponent {
   static propTypes = {
     profilePicture: PropTypes.string,
-    rating: PropTypes.float,
+    rating: PropTypes.number,
     rank: PropTypes.number,
     popularity: PropTypes.number,
   };
