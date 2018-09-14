@@ -2,14 +2,14 @@ import React from 'react';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Header } from './styles';
+import { Login } from './styles';
 
 class ProfileCard extends React.PureComponent {
   render() {
     return (
-      <div>
-        <Header>Test</Header>
-      </div>
+      <React.Fragment>
+        <Login>Test</Login>
+      </React.Fragment>
     );
   }
 }

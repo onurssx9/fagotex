@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import theme from '../../theme';
 
-export const Header = styled.div`
+export const Login = styled.div`
   display: flex;
-  width: 250px;
-  heigth: 250px;
-  background: red;
+  width: 100%;
+  heigth: 100%;
+  background: ${theme.primaryDark};
 `;
