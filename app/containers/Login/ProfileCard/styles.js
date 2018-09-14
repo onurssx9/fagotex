@@ -9,13 +9,62 @@ export const Login = styled.div`
 `;
 
 export const Form = styled.div`
+  position: relative;
   width: 300px;
   min-width: 300px;
+  height: 435px;
   background: white;
   flex-direction: column;
   border-radius: 10px;
   align-items: center;
+  justify-content: space-between;
   padding: 10px;
+
+  [type*='login-submit'] {
+    &:before {
+      content: '';
+      position: absolute;
+      height: 100%;
+      width: 50%;
+      left: 0px;
+      top: 0px;
+      border-radius: 5px;
+      background: ${theme.red};
+      transition: all 0.5s ease;
+    }
+  }
+
+  [type*='register-submit'] {
+    &:before {
+      content: '';
+      position: absolute;
+      height: 100%;
+      width: 50%;
+      left: 50%;
+      top: 0px;
+      border-radius: 5px;
+      background: ${theme.green};
+      transition: all 0.5s ease;
+    }
+  }
+
+  &[type='login'] {
+    [label='Name'] {
+      display: none;
+    }
+  }
+
+  > div:last-child button {
+    color: white;
+
+    &[type='login'] {
+      background: ${theme.red};
+    }
+
+    &[type='register'] {
+      background: ${theme.green};
+    }
+  }
 `;
 
 export const Title = styled.h1`
@@ -54,8 +103,9 @@ export const Seperator = styled.div`
 `;
 
 export const Wrapper = styled.div`
+position: relative;
   width: 100%;
-  padding: 10px;
+  margin: 10px;
   margin-bottom: 10px;
 
   &:before {
@@ -66,9 +116,25 @@ export const Wrapper = styled.div`
     justify-content: baseline;
   }
 
-  &[label="Name"] {
-    display: ${props => props.display};
+  &[type="login-submit"] {
+    [type="login"] {
+      color: white;
+    }
   }
+
+  &[type="register-submit"] {
+    [type="register"] {
+      color: white;
+    }
+  }
+`;
+
+export const Group = styled.div`
+  flex: 1;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const Button = styled.button`
@@ -78,16 +144,15 @@ export const Button = styled.button`
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.5s ease;
+  outline: none;
+  color: ${theme.green};
+  z-index: 9;
+
+  &[type='login'] {
+    color: ${theme.red};
+  }
 
   &:hover {
     border-radius: 2px;
-  }
-
-  &[type='login'] {
-    background: ${theme.yellow};
-  }
-
-  &[type='register'] {
-    color: ${theme.yellow};
   }
 `;

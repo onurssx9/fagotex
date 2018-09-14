@@ -11,48 +11,68 @@ import {
   FormInput,
   Seperator,
   Button,
+  Group,
 } from './styles';
 
 class ProfileCard extends React.PureComponent {
   state = {
-    register: '',
+    formType: 'login',
   };
 
-  updateForm(isRegister) {
-    this.setState({ register: isRegister });
+  updateFormType(type) {
+    this.setState({ formType: type });
+  }
+
+  sendForm() {
+    alert(this.state.formType);
   }
 
   render() {
     return (
       <React.Fragment>
         <Login>
-          <Form>
+          <Form type={this.state.formType}>
             <Title>Fagotex</Title>
             <Motto>
               To keep your secret is wisdom; but to expect others to keep it is
               folly.
             </Motto>
-            <Wrapper display={this.state.register} label="Name">
-              <Seperator flex="2">
-                <FormInput type="text" />
-              </Seperator>
+            <Group>
+              <Wrapper label="Name">
+                <Seperator flex="2">
+                  <FormInput type="text" />
+                </Seperator>
+              </Wrapper>
+              <Wrapper label="Email">
+                <Seperator flex="2">
+                  <FormInput type="email" />
+                </Seperator>
+              </Wrapper>
+              <Wrapper label="Password">
+                <Seperator flex="2">
+                  <FormInput type="password" />
+                </Seperator>
+              </Wrapper>
+            </Group>
+            <Wrapper type={`${this.state.formType}-submit`} switch="test">
+              <Button onClick={() => this.updateFormType('login')} type="login">
+                Login
+              </Button>
+              <Button
+                onClick={() => this.updateFormType('register')}
+                type="register"
+              >
+                Register
+              </Button>
             </Wrapper>
-            <Wrapper label="Email">
-              <Seperator flex="2">
-                <FormInput type="email" />
-              </Seperator>
+            <Wrapper>
+              <Button
+                onClick={() => this.sendForm()}
+                type={this.state.formType}
+              >
+                {"Let's go!"}
+              </Button>
             </Wrapper>
-            <Wrapper label="Password">
-              <Seperator flex="2">
-                <FormInput type="password" />
-              </Seperator>
-            </Wrapper>
-            <Button onClick={() => this.updateForm('none')} type="login">
-              Login
-            </Button>
-            <Button onClick={() => this.updateForm('flex')} type="register">
-              Register
-            </Button>
           </Form>
         </Login>
       </React.Fragment>
