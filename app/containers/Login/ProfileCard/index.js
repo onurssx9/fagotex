@@ -1,92 +1,57 @@
 import React from 'react';
+import GoogleLogin from 'react-google-login';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {
-  Login,
-  Form,
-  Title,
-  Motto,
-  Wrapper,
-  FormInput,
-  Seperator,
-  Button,
-  Group,
-  ProfilePicture,
-  PictureContainer,
-} from './styles';
+import { getUserName } from '../selectors';
+import { setUserName } from '../actions';
+import { Login, Form, Title, Motto, Wrapper, ProfilePicture } from './styles';
 
 class ProfileCard extends React.PureComponent {
   static propTypes = {
     source: PropTypes.string,
+    setUserName: PropTypes.func,
+    userName: PropTypes.string,
+    // imageUrl: PropTypes.string,
+    // googleId: PropTypes.string,
+    // email: PropTypes.string,
   };
 
-  state = {
-    formType: 'login',
+  updateName = event => {
+    this.props.setUserName(event.target.value);
   };
 
-  updateFormType(type) {
-    this.setState({ formType: type });
-  }
-
-  sendForm() {
-    alert(this.state.formType);
-  }
+  responseGoogle = response => {
+    console.log(response);
+    const { profileObj } = response;
+    this.props.setUserName(profileObj.name);
+  };
 
   render() {
     return (
       <React.Fragment>
         <Login>
-          <Form type={this.state.formType}>
-            <PictureContainer>
-              <ProfilePicture
-                source={
-                  this.props.source ||
-                  'http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png'
-                }
-              />
-            </PictureContainer>
-            <Title>Fagotex</Title>
+          <Form>
+            <ProfilePicture
+              source={
+                this.props.source ||
+                'http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png'
+              }
+            />
+            <Title>{this.props.userName || 'Fagotex'}</Title>
             <Motto>
               To keep your secret is wisdom; but to expect others to keep it is
               folly.
             </Motto>
-            <Group>
-              <Wrapper label="Name">
-                <Seperator flex="2">
-                  <FormInput type="text" />
-                </Seperator>
-              </Wrapper>
-              <Wrapper label="Email">
-                <Seperator flex="2">
-                  <FormInput type="email" />
-                </Seperator>
-              </Wrapper>
-              <Wrapper label="Password">
-                <Seperator flex="2">
-                  <FormInput type="password" />
-                </Seperator>
-              </Wrapper>
-            </Group>
-            <Wrapper type={`${this.state.formType}-submit`} switch="test">
-              <Button onClick={() => this.updateFormType('login')} type="login">
-                Login
-              </Button>
-              <Button
-                onClick={() => this.updateFormType('register')}
-                type="register"
-              >
-                Register
-              </Button>
-            </Wrapper>
             <Wrapper>
-              <Button
-                onClick={() => this.sendForm()}
-                type={this.state.formType}
-              >
-                {"Let's go!"}
-              </Button>
+              <GoogleLogin
+                clientId="903355575028-58hse89u1r0s9d0fr9aoelht2jrcq1cj.apps.googleusercontent.com"
+                buttonText="Login"
+                className="googleLogin"
+                onSuccess={response => this.responseGoogle(response)}
+                onFailure={response => this.responseGoogle(response)}
+              />
             </Wrapper>
           </Form>
         </Login>
@@ -95,10 +60,12 @@ class ProfileCard extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  userName: getUserName(),
+});
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({}, dispatch);
+  return bindActionCreators({ setUserName }, dispatch);
 }
 
 export default connect(

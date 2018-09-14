@@ -11,17 +11,20 @@
  */
 import { fromJS } from 'immutable';
 
-import { DEFAULT } from './constants';
+import { USER_NAME, FORM_TYPE } from './constants';
 
 // The initial state of the App
 export const initialState = fromJS({
   username: '',
+  formType: 'login',
 });
 
 function homeReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT:
-      return state.set('username', action.data);
+    case USER_NAME:
+      return state.set('userName', action.data);
+    case FORM_TYPE:
+      return state.set('formType', action.data);
     default:
       return state;
   }
