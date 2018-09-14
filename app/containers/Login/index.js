@@ -19,18 +19,12 @@ export class Login extends React.PureComponent {
   }
 
   render() {
-    return (
-      <div>
-        <ProfileCard />
-        {this.props.userName}
-      </div>
-    );
+    return <ProfileCard />;
   }
 }
 
 Login.propTypes = {
   setName: PropTypes.func,
-  userName: PropTypes.string,
 };
 
 export function mapDispatchToProps(dispatch) {

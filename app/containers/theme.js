@@ -3,6 +3,8 @@ export default {
   primaryLight: '#353535',
   secondaryDark: '#454545',
   secondaryLight: '#555555',
-  grey: '#757575',
+  grey: '#dedede',
   yellow: '#f9c53f',
+
+  seperator: `1px #353535 solid`,
 };

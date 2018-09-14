@@ -111,13 +111,13 @@ export const Stats = styled.div`
   > div {
     width: 100%;
     height: 80px;
-    border-bottom: 1px ${theme.primaryLight} solid;
+    border-bottom: ${theme.seperator};
     padding-top: 5px;
     padding-bottom: 5px;
     background: ${theme.primaryDark};
 
     &:first-child {
-      border-top: 1px ${theme.primaryLight} solid;
+      border-top: ${theme.seperator};
     }
   }
 `;
