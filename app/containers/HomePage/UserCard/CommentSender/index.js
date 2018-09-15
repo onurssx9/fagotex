@@ -21,18 +21,27 @@ class CommentSender extends React.PureComponent {
   };
 
   sendComment = () => {
+    this.setState({ comment: '' });
     this.props.addComment({
       text: this.state.comment,
       userId: this.props.userId,
     });
   };
 
+  handleKeyPress = event => {
+    if (event.charCode === 13) {
+      this.sendComment();
+    }
+  };
+
   render() {
     return (
       <React.Fragment>
         <CommentInput
+          value={this.state.comment}
           onChange={event => this.updateComment(event)}
           placeholder="Enter your comment"
+          onKeyPress={event => this.handleKeyPress(event)}
         />
         <SendComment onClick={this.sendComment}>Send</SendComment>
       </React.Fragment>

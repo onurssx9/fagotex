@@ -104,7 +104,13 @@ export const Comments = styled.div`
 `;
 
 export const Comment = styled.div`
-  min-height: 30px;
+  display: block;
   width: 100%;
   border-bottom: ${Attributes.blockSeperator};
+  height: fit-content;
+  padding: 5px 0px 5px 0px;
+
+  &:last-child {
+    border-bottom: none;
+  }
 `;

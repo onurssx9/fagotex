@@ -31,6 +31,26 @@ injectGlobal`
   div {
     display: flex;
     box-sizing: border-box;
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: transparent; 
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #dedede; 
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #f9c53f; 
+    }
   }
 
   * {

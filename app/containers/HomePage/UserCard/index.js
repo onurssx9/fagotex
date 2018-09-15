@@ -15,6 +15,10 @@ import {
 import CommentSender from './CommentSender';
 
 class UserCard extends React.PureComponent {
+  componentDidMount() {
+    this.commentBox.scrollTop = this.commentBox.scrollHeight;
+  }
+
   static propTypes = {
     user: PropTypes.object,
   };
@@ -41,11 +45,17 @@ class UserCard extends React.PureComponent {
           </Block>
         </Block>
         <Block flex="3" className="column">
-          <Comments>
-            {this.props.user.comments.recieved.map((comment, index) => {
-              const key = index;
-              return <Comment key={key}>{comment.text}</Comment>;
-            })}
+          <Comments
+            innerRef={elem => {
+              this.commentBox = elem;
+            }}
+          >
+            {Object.values(this.props.user.comments.recieved).map(
+              (comment, index) => {
+                const key = index;
+                return <Comment key={key}>{comment.text}</Comment>;
+              },
+            )}
           </Comments>
         </Block>
         <Block flex="1" className="row">

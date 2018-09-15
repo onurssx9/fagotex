@@ -13,14 +13,9 @@ import { fromJS } from 'immutable';
 
 import { LOGIN, USER_OBJECT, SET_USERS } from './constants';
 
-// const comment = (text, userId) => ({
-//   text,
-//   userId,
-// });
-
 const comments = () => ({
-  recieved: [],
-  sent: [],
+  recieved: {},
+  sent: {},
 });
 
 const userObject = fromJS({
