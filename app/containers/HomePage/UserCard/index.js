@@ -45,7 +45,10 @@ class UserCard extends React.PureComponent {
           <Block flex="1" className="row stats">
             <Stat type="rating">{this.props.user.rating || '-'}</Stat>
             <Stat type="rank">{this.props.user.rank || '-'}</Stat>
-            <Stat type="popularity">{this.props.user.popularity || '-'}</Stat>
+            <Stat type="popularity">
+              {Object.keys(this.props.user.comments.recieved).length *
+                this.props.user.rating || '-'}
+            </Stat>
           </Block>
         </Block>
         <Block flex="3" className="column">

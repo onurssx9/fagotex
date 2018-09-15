@@ -7,7 +7,7 @@ export const People = styled.div`
   overflow-y: auto;
   width: fit-content;
   height: fit-content;
-  max-height: 100vh;
+  max-height: 100%;
   justify-content: space-around;
   align-items: flex-start;
 `;

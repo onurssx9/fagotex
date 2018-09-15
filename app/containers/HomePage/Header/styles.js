@@ -32,6 +32,7 @@ export const Profile = styled.div`
   justify-content: space-between;
   flex-direction: column;
   width: 80px;
+  height: 80px;
   background: ${Attributes.primaryLight};
 `;
 
@@ -48,6 +49,7 @@ export const PictureContainer = styled.div`
   justify-content: center;
   width: 100%;
   height: 80px;
+  min-height: 80px;
   background: ${Attributes.primaryDark};
   overflow: hidden;
   cursor: pointer;
