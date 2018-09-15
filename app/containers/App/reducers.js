@@ -29,7 +29,7 @@ function globalReducer(state = initialState, action) {
     case LOGIN:
       return state.set('login', action.status);
     case USER_OBJECT:
-      return state.set('userObject', action.data);
+      return state.merge({ userObject: action.data });
     default:
       return state;
   }
