@@ -2,33 +2,47 @@ const express = require('express');
 const router = express.Router();
 const firebase = require('../Firebase');
 
-router.get('/', (req, res) => {
-  if (!req.query.userId) {
-    res.send("{status:false, message:'Missing Parameters'}");
-  }
+const getUser = userId =>
   firebase
     .auth()
     .app.database()
-    .ref(`users/${req.query.userId}`)
-    .once('value')
-    .then(snapshot => {
-      res.send({ status: true, userObject: snapshot });
-    });
+    .ref(`users/${userId}`)
+    .once('value');
+
+const createUser = userObject =>
+  firebase
+    .auth()
+    .app.database()
+    .ref(`users/${userObject.googleId}`)
+    .set(userObject);
+
+router.get('/', (req, res) => {
+  if (!req.query.userId) {
+    res.send({ status: false, message: 'Missing Parameters' });
+  }
+  getUser(req.query.userId).then(snapshot => {
+    res.send({ status: snapshot.exists(), userObject: snapshot });
+  });
 });
 
 router.post('/', (req, res) => {
   if (!req.body.googleId) {
-    res.send("{status:false, message:'Missing Parameters'}");
+    res.send({ status: false, message: 'Missing Parameters' });
   }
 
-  firebase
-    .auth()
-    .app.database()
-    .ref(`users/${req.body.googleId}`)
-    .set(req.body)
-    .then(() => {
-      res.send({ status: true });
-    });
+  getUser(req.body.googleId).then(snapshot => {
+    if (snapshot.exists()) {
+      res.send({
+        status: false,
+        message: 'Users already created',
+        userObject: snapshot,
+      });
+    }
+    createUser(req.body).then(() => ({
+      status: true,
+      message: 'create succeed',
+    }));
+  });
 });
 
 module.exports = router;
