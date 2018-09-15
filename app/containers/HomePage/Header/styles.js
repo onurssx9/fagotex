@@ -19,7 +19,7 @@ export const Bar = styled.div`
   a {
     color: white;
     width: 100%;
-    background: ${theme.red};
+    background: ${theme.green};
     text-decoration: none;
     text-align: center;
     align-self: flex-start;

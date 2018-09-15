@@ -4,8 +4,6 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
-import { getUserObject, getLoginStatus } from '../../App/selectors';
-import { changeLoginStatus } from '../../App/actions';
 import {
   Bar,
   PictureContainer,
@@ -57,13 +55,10 @@ class Header extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-  userObject: getUserObject(),
-  login: getLoginStatus(),
-});
+const mapStateToProps = createStructuredSelector({});
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ changeLoginStatus }, dispatch);
+  return bindActionCreators({}, dispatch);
 }
 
 export default connect(

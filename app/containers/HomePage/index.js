@@ -6,39 +6,33 @@ import { createStructuredSelector } from 'reselect';
 
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
-import { setName } from './actions';
-import { getUserName } from './selectors';
+import { getUserObject, getLoginStatus } from '../App/selectors';
+import { changeLoginStatus } from '../App/actions';
 import reducer from './reducers';
 import saga from './sagas';
 import Header from './Header';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Login extends React.PureComponent {
-  componentDidMount() {
-    this.props.setName('Kaze');
-  }
+  static propTypes = {
+    userObject: PropTypes.object,
+    login: PropTypes.bool,
+  };
 
   render() {
-    return <Header>{this.props.userName}</Header>;
+    return (
+      <Header userObject={this.props.userObject} login={this.props.login} />
+    );
   }
 }
 
-Login.propTypes = {
-  setName: PropTypes.func,
-  userName: PropTypes.string,
-};
-
 export function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      setName,
-    },
-    dispatch,
-  );
+  return bindActionCreators({ changeLoginStatus }, dispatch);
 }
 
 const mapStateToProps = createStructuredSelector({
-  userName: getUserName(),
+  userObject: getUserObject(),
+  login: getLoginStatus(),
 });
 
 const withConnect = connect(
