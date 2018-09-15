@@ -1,4 +1,4 @@
-import { LOGIN, USER_OBJECT } from './constants';
+import { LOGIN, USER_OBJECT, GET_USER_BY_ID } from './constants';
 
 export function changeLoginStatus(status) {
   return {
@@ -11,5 +11,12 @@ export function setUserObject(data) {
   return {
     type: USER_OBJECT,
     data,
+  };
+}
+
+export function getUserById(userId) {
+  return {
+    type: GET_USER_BY_ID,
+    userId,
   };
 }
