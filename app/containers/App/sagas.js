@@ -100,10 +100,7 @@ function* addCommentRequest(comment) {
         'Content-Type': 'application/json',
       },
     };
-    const response = yield call(request, requestURL, requestOptions);
-    if (response.status) {
-      console.log(response);
-    }
+    yield call(request, requestURL, requestOptions);
   } catch (error) {
     console.log(error);
   }
