@@ -16,10 +16,11 @@ const addComment = payload =>
       text: payload.text,
     })
     .then(status => {
-      if (!status) {
-        return db.ref(`users/${payload.senderId}/comments/sent`).push({
+      if (status) {
+        db.ref('comments/').push({
           text: payload.text,
-          reciever: payload.recieverId,
+          recieverId: payload.recieverId,
+          senderId: payload.senderId,
         });
       }
       return status;

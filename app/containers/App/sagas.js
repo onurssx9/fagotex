@@ -9,6 +9,7 @@ import {
 import { setUserObject, setUsers } from './actions';
 import request from '../../utils/request';
 import { getUserObject } from './selectors';
+import listeners from './listeners';
 
 const API_ENDPOINT = '/api/';
 
@@ -138,7 +139,7 @@ function* addCommentRequest(comment) {
 function* addCommentRequestWatcher() {
   while (true) {
     const action = yield take(ADD_COMMENT);
-    const senderId = (yield select(getUserObject())).googleId;
+    const senderId = (yield select(getUserObject())).googleId || 'anonym';
     const addCommentPayload = {
       text: action.data.text,
       recieverId: action.data.userId,
@@ -155,6 +156,7 @@ function* rootSaga() {
     updateUserRequestWatcher,
     getUsersWatcher,
     addCommentRequestWatcher,
+    listeners,
   ].map(saga => call(saga));
 }
 export default rootSaga;
