@@ -9,6 +9,7 @@ import {
 import { setUserObject, setUsers } from './actions';
 import request from '../../utils/request';
 import { getUserObject } from './selectors';
+import listeners from './listeners';
 
 const API_ENDPOINT = '/api/';
 
@@ -155,6 +156,7 @@ function* rootSaga() {
     updateUserRequestWatcher,
     getUsersWatcher,
     addCommentRequestWatcher,
+    listeners,
   ].map(saga => call(saga));
 }
 export default rootSaga;
