@@ -19,6 +19,10 @@ class UserCard extends React.PureComponent {
     this.commentBox.scrollTop = this.commentBox.scrollHeight;
   }
 
+  componentDidUpdate() {
+    this.commentBox.scrollTop = this.commentBox.scrollHeight;
+  }
+
   static propTypes = {
     user: PropTypes.object,
   };
