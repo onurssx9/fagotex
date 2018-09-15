@@ -1,25 +1,32 @@
-import { all, call, take, put } from 'redux-saga/effects';
+import { call, take, put } from 'redux-saga/effects';
 import { USER_OBJECT, GET_USER_BY_ID } from './constants';
 import { setUserObject } from './actions';
 import request from '../../utils/request';
 
-const horizon = (type, method, param) =>
-  ({
-    user: {
-      get: () => `user/userId=${param}`,
-      create: () => 'user/',
-    },
-    users: 'users/',
-  }[type](method));
+const API_ENDPOINT = '/api/';
+
+const horizon = {
+  user: {
+    get: param => `user/userId=${param}`,
+    create: () => 'user/',
+  },
+  users: {
+    get: () => 'users/',
+    create: () => 'users/',
+  },
+};
 
 function* createUserRequest(userObject) {
   try {
     const requestOptions = {
-      url: horizon('user', 'create'),
       method: 'POST',
       body: JSON.stringify(userObject),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     };
-    const response = yield call(request, requestOptions);
+    const requestURL = API_ENDPOINT + horizon.user.create();
+    const response = yield call(request, requestURL, requestOptions);
     if (response.status) {
       console.log('create method succeed');
     }
@@ -31,18 +38,14 @@ function* createUserRequest(userObject) {
 function* createUserRequestWatcher() {
   while (true) {
     const action = yield take(USER_OBJECT);
-    console.log(123);
     yield call(createUserRequest, action.data);
   }
 }
 
 function* getUserByIDRequest(userId) {
   try {
-    const requestOptions = {
-      url: horizon('user', 'get', userId),
-      method: 'GET',
-    };
-    const response = yield call(request, requestOptions);
+    const requestURL = API_ENDPOINT + horizon.user.get(userId);
+    const response = yield call(request, requestURL);
     if (response.status) {
       yield put(setUserObject, response.userObject);
     }
@@ -59,7 +62,8 @@ function* getUserByIDRequestWatcher() {
 }
 
 function* rootSaga() {
-  console.log(333);
-  yield all([createUserRequestWatcher, getUserByIDRequestWatcher]);
+  yield [createUserRequestWatcher, getUserByIDRequestWatcher].map(saga =>
+    call(saga),
+  );
 }
 export default rootSaga;
