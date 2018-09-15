@@ -5,6 +5,7 @@ import {
   UPDATE_USER,
   SET_USERS,
   GET_USERS,
+  ADD_COMMENT,
 } from './constants';
 
 export function changeLoginStatus(status) {
@@ -31,6 +32,13 @@ export function setUsers(data) {
 export function getUsers() {
   return {
     type: GET_USERS,
+  };
+}
+
+export function addComment(data) {
+  return {
+    type: ADD_COMMENT,
+    data,
   };
 }
 

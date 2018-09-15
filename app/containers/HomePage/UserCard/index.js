@@ -54,7 +54,7 @@ class UserCard extends React.PureComponent {
         </Block>
         <Block flex="1" className="row">
           <Block flex="3" className="row">
-            <CommentSender />
+            <CommentSender userId={this.props.user.googleId} />
           </Block>
         </Block>
       </Card>

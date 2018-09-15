@@ -13,15 +13,15 @@ import { fromJS } from 'immutable';
 
 import { LOGIN, USER_OBJECT, SET_USERS } from './constants';
 
-const comment = {
-  text: '',
-  userId: '',
-};
+const comment = (text, userId) => ({
+  text,
+  userId,
+});
 
-const comments = {
-  recieved: [comment],
-  sent: [comment],
-};
+const comments = () => ({
+  recieved: [comment('', '')],
+  sent: [comment('', '')],
+});
 
 // The initial state of the App
 export const initialState = fromJS({
@@ -34,7 +34,7 @@ export const initialState = fromJS({
     rating: 1,
     rank: 0,
     popularity: 0,
-    comments,
+    comments: comments(),
   },
   userCards: {},
 });
