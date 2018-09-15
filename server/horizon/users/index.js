@@ -3,7 +3,7 @@ const firebase = require('../Firebase');
 const router = express.Router();
 
 const db = firebase.auth().app.database();
-
+// Get All User
 router.get('/', (_, res) => {
   db.ref('users').once(
     'value',
