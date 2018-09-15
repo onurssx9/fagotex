@@ -11,7 +11,17 @@
  */
 import { fromJS } from 'immutable';
 
-import { LOGIN, USER_OBJECT } from './constants';
+import { LOGIN, USER_OBJECT, SET_USERS } from './constants';
+
+const comment = {
+  text: '',
+  userId: '',
+};
+
+const comments = {
+  recieved: [comment],
+  sent: [comment],
+};
 
 // The initial state of the App
 export const initialState = fromJS({
@@ -20,8 +30,13 @@ export const initialState = fromJS({
     name: '',
     googleId: '',
     email: '',
-    image: '',
+    imageUrl: '',
+    rating: 1,
+    rank: 0,
+    popularity: 0,
+    comments,
   },
+  userCards: [],
 });
 
 function globalReducer(state = initialState, action) {
@@ -29,7 +44,9 @@ function globalReducer(state = initialState, action) {
     case LOGIN:
       return state.set('login', action.status);
     case USER_OBJECT:
-      return state.merge({ userObject: action.data });
+      return state.mergeDeep({ userObject: action.data });
+    case SET_USERS:
+      return state.mergeDeep({ userCards: action.data });
     default:
       return state;
   }

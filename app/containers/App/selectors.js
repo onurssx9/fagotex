@@ -9,6 +9,11 @@ const getLoginStatus = () =>
   createSelector(selectRoute, routeState => routeState.get('login'));
 
 const getUserObject = () =>
-  createSelector(selectRoute, routeState => routeState.get('userObject'));
+  createSelector(selectRoute, routeState =>
+    routeState.get('userObject').toJS(),
+  );
 
-export { makeSelectLocation, getLoginStatus, getUserObject };
+const getUserCards = () =>
+  createSelector(selectRoute, routeState => routeState.get('userCards').toJS());
+
+export { makeSelectLocation, getLoginStatus, getUserObject, getUserCards };

@@ -1,7 +1,13 @@
-import { call, take, put } from 'redux-saga/effects';
-import { USER_OBJECT, GET_USER_BY_ID, UPDATE_USER } from './constants';
-import { setUserObject } from './actions';
+import { call, take, put, select } from 'redux-saga/effects';
+import {
+  USER_OBJECT,
+  GET_USER_BY_ID,
+  UPDATE_USER,
+  GET_USERS,
+} from './constants';
+import { setUserObject, setUsers } from './actions';
 import request from '../../utils/request';
+import { getUserObject } from './selectors';
 
 const API_ENDPOINT = '/api/';
 
@@ -38,8 +44,9 @@ function* createUserRequest(userObject) {
 
 function* createUserRequestWatcher() {
   while (true) {
-    const action = yield take(USER_OBJECT);
-    yield call(createUserRequest, action.data);
+    yield take(USER_OBJECT);
+    const data = yield select(getUserObject());
+    yield call(createUserRequest, data);
   }
 }
 
@@ -59,6 +66,25 @@ function* getUserByIDRequestWatcher() {
   while (true) {
     const action = yield take(GET_USER_BY_ID);
     yield call(getUserByIDRequest, action.userId);
+  }
+}
+
+function* getUsers() {
+  try {
+    const requestURL = API_ENDPOINT + horizon.users.get();
+    const response = yield call(request, requestURL);
+    if (response.status) {
+      yield put(setUsers(response.users));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function* getUsersWatcher() {
+  while (true) {
+    yield take(GET_USERS);
+    yield call(getUsers);
   }
 }
 
@@ -93,6 +119,7 @@ function* rootSaga() {
     createUserRequestWatcher,
     getUserByIDRequestWatcher,
     updateUserRequestWatcher,
+    getUsersWatcher,
   ].map(saga => call(saga));
 }
 export default rootSaga;

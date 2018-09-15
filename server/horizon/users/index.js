@@ -8,7 +8,10 @@ router.get('/', (_, res) => {
   db.ref('users').once(
     'value',
     snapshot => {
-      res.send({ status: true, users: snapshot.val() });
+      res.send({
+        status: true,
+        users: Object.values(snapshot.val()).map(x => x),
+      });
     },
     () => {
       res.send({ status: false, message: 'Missing Parameters' });
