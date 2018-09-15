@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import theme from '../../theme';
+import { Attributes } from '../../theme';
 
 export const Login = styled.div`
   align-items: center;
   justify-content: center;
   flex: 1;
-  background: ${theme.primaryDark};
+  background: ${Attributes.primaryDark};
 
   .googleLogin {
     width: 100%;
@@ -16,7 +16,7 @@ export const Login = styled.div`
     transition: all 0.5s ease;
     outline: none;
     color: white;
-    background: ${theme.green};
+    background: ${Attributes.green};
 
     &:hover {
       border-radius: 2px;
@@ -39,14 +39,14 @@ export const Form = styled.div`
 export const Title = styled.h1`
   padding: 0px;
   margin: 10px 0px 10px 0px;
-  color: ${theme.secondaryLight};
+  color: ${Attributes.secondaryLight};
   text-align: center;
   font-size: 25px;
 `;
 
 export const Motto = styled.span`
-  color: ${theme.grey};
-  border-bottom: 1px ${theme.grey} solid;
+  color: ${Attributes.grey};
+  border-bottom: 1px ${Attributes.grey} solid;
   padding-bottom: 10px;
   text-align: center;
   margin-bottom: 10px;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import theme from '../../theme';
+import { Attributes } from '../../theme';
 
 export const Bar = styled.div`
   display: flex;
@@ -8,7 +8,7 @@ export const Bar = styled.div`
   flex-direction: column;
   width: 80px;
   height: 100%;
-  background: ${theme.primaryLight};
+  background: ${Attributes.primaryLight};
 
   div {
     display: flex;
@@ -19,7 +19,7 @@ export const Bar = styled.div`
   a {
     color: white;
     width: 100%;
-    background: ${theme.green};
+    background: ${Attributes.green};
     text-decoration: none;
     text-align: center;
     align-self: flex-start;
@@ -32,7 +32,7 @@ export const Profile = styled.div`
   justify-content: space-between;
   flex-direction: column;
   width: 80px;
-  background: ${theme.primaryLight};
+  background: ${Attributes.primaryLight};
 `;
 
 export const ProfilePicture = styled.div`
@@ -48,7 +48,7 @@ export const PictureContainer = styled.div`
   justify-content: center;
   width: 100%;
   height: 80px;
-  background: ${theme.primaryDark};
+  background: ${Attributes.primaryDark};
   overflow: hidden;
   cursor: pointer;
 
@@ -75,7 +75,7 @@ export const Rating = styled.div`
   div {
     align-items: center;
     justify-content: center;
-    color: ${theme.grey};
+    color: ${Attributes.grey};
     font-size: 20px;
   }
 `;
@@ -91,13 +91,13 @@ export const Rank = styled.div`
     align-items: center;
     justify-content: center;
     font-size: 25px;
-    color: ${theme.yellow};
+    color: ${Attributes.yellow};
   }
 
   div {
     align-items: center;
     justify-content: center;
-    color: ${theme.grey};
+    color: ${Attributes.grey};
     font-size: 20px;
   }
 `;
@@ -117,7 +117,7 @@ export const Popularity = styled.div`
   div {
     align-items: center;
     justify-content: center;
-    color: ${theme.grey};
+    color: ${Attributes.grey};
     font-size: 20px;
   }
 `;
@@ -129,13 +129,13 @@ export const Stats = styled.div`
   > div {
     width: 100%;
     height: 80px;
-    border-bottom: ${theme.seperator};
+    border-bottom: ${Attributes.seperator};
     padding-top: 5px;
     padding-bottom: 5px;
-    background: ${theme.primaryDark};
+    background: ${Attributes.primaryDark};
 
     &:first-child {
-      border-top: ${theme.seperator};
+      border-top: ${Attributes.seperator};
     }
   }
 `;

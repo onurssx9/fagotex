@@ -1,0 +1,13 @@
+import styled from 'styled-components';
+import { Attributes } from '../theme';
+
+export const People = styled.div`
+  background: ${Attributes.secondaryDark};
+  flex-wrap: wrap;
+  overflow-y: auto;
+  width: fit-content;
+  height: fit-content;
+  max-height: 100vh;
+  justify-content: space-around;
+  align-items: flex-start;
+`;

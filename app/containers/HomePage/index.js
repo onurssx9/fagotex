@@ -11,6 +11,8 @@ import { changeLoginStatus } from '../App/actions';
 import reducer from './reducers';
 import saga from './sagas';
 import Header from './Header';
+import UserCard from './UserCard';
+import { People } from './styles';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Login extends React.PureComponent {
@@ -21,7 +23,14 @@ export class Login extends React.PureComponent {
 
   render() {
     return (
-      <Header userObject={this.props.userObject} login={this.props.login} />
+      <React.Fragment>
+        <Header userObject={this.props.userObject} login={this.props.login} />
+        <People>
+          <UserCard user={this.props.userObject} />
+          <UserCard user={this.props.userObject} />
+          <UserCard user={this.props.userObject} />
+        </People>
+      </React.Fragment>
     );
   }
 }
