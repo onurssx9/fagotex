@@ -1,6 +1,6 @@
 import { call, select, take } from 'redux-saga/effects';
 import { getUserName } from '../HomePage/selectors';
-import { USER_NAME } from './constants';
+import { USER_OBJECT } from './constants';
 // import request from 'utils/request';
 export function* getRepos() {
   // Select username from store
@@ -16,7 +16,7 @@ export function* getRepos() {
  */
 export default function* githubData() {
   while (true) {
-    const action = yield take(USER_NAME);
+    const action = yield take(USER_OBJECT);
     yield call(getRepos, action.data);
   }
 }

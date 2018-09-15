@@ -11,25 +11,20 @@
  */
 import { fromJS } from 'immutable';
 
-import { USER_OBJECT } from './constants';
+import { LOGIN } from './constants';
 
 // The initial state of the App
 export const initialState = fromJS({
-  userObject: {
-    name: '',
-    googleId: '',
-    email: '',
-    image: '',
-  },
+  login: false,
 });
 
-function homeReducer(state = initialState, action) {
+function globalReducer(state = initialState, action) {
   switch (action.type) {
-    case USER_OBJECT:
-      return state.set('userObject', action.data);
+    case LOGIN:
+      return state.set('login', action.status);
     default:
       return state;
   }
 }
 
-export default homeReducer;
+export default globalReducer;

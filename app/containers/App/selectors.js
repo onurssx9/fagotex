@@ -5,4 +5,7 @@ const selectRoute = state => state.get('route');
 const makeSelectLocation = () =>
   createSelector(selectRoute, routeState => routeState.get('location').toJS());
 
-export { makeSelectLocation };
+const getLoginStatus = () =>
+  createSelector(selectRoute, routeState => routeState.get('login'));
+
+export { makeSelectLocation, getLoginStatus };

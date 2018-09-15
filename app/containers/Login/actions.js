@@ -1,15 +1,8 @@
-import { FORM_TYPE, USER_NAME } from './constants';
+import { USER_OBJECT } from './constants';
 
-export function setFormType(data) {
+export function setUserObject(data) {
   return {
-    type: FORM_TYPE,
-    data,
-  };
-}
-
-export function setUserName(data) {
-  return {
-    type: USER_NAME,
+    type: USER_OBJECT,
     data,
   };
 }
