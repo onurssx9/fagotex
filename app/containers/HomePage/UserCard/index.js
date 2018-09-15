@@ -19,10 +19,6 @@ class UserCard extends React.PureComponent {
     user: PropTypes.object,
   };
 
-  state = {
-    comments: ['test', 'olcay', 'kaze'],
-  };
-
   render() {
     return (
       <Card>
@@ -46,9 +42,9 @@ class UserCard extends React.PureComponent {
         </Block>
         <Block flex="3" className="column">
           <Comments>
-            {this.state.comments.map((comment, index) => {
+            {this.props.user.comments.recieved.map((comment, index) => {
               const key = index;
-              return <Comment key={key}>{comment}</Comment>;
+              return <Comment key={key}>{comment.text}</Comment>;
             })}
           </Comments>
         </Block>
