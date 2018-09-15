@@ -24,7 +24,7 @@ export class Login extends React.PureComponent {
     userObject: PropTypes.object,
     getUsers: PropTypes.func,
     login: PropTypes.bool,
-    userCards: PropTypes.array,
+    userCards: PropTypes.object,
   };
 
   render() {
@@ -32,7 +32,7 @@ export class Login extends React.PureComponent {
       <React.Fragment>
         <Header userObject={this.props.userObject} login={this.props.login} />
         <People>
-          {this.props.userCards.map((user, index) => {
+          {Object.values(this.props.userCards).map((user, index) => {
             const key = index;
             return <UserCard key={key} user={user} />;
           })}

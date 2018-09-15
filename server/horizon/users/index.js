@@ -10,7 +10,7 @@ router.get('/', (_, res) => {
     snapshot => {
       res.send({
         status: true,
-        users: Object.values(snapshot.val()).map(x => x),
+        users: snapshot.val(),
       });
     },
     () => {

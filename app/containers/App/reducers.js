@@ -36,7 +36,7 @@ export const initialState = fromJS({
     popularity: 0,
     comments,
   },
-  userCards: [],
+  userCards: {},
 });
 
 function globalReducer(state = initialState, action) {
