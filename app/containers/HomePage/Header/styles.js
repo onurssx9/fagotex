@@ -15,6 +15,24 @@ export const Bar = styled.div`
     align-items: center;
     flex-direction: column;
   }
+
+  a {
+    color: white;
+    width: 100%;
+    background: ${theme.red};
+    text-decoration: none;
+    text-align: center;
+    align-self: flex-start;
+  }
+`;
+
+export const Profile = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 80px;
+  background: ${theme.primaryLight};
 `;
 
 export const ProfilePicture = styled.div`

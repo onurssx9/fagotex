@@ -3,10 +3,6 @@ import { connect } from 'react-redux';
 import { compose, bindActionCreators } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
-import reducer from './reducers';
-import saga from './sagas';
 import ProfileCard from './ProfileCard';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -27,11 +23,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'home', reducer });
-const withSaga = injectSaga({ key: 'home', saga });
-
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(Login);
+export default compose(withConnect)(Login);

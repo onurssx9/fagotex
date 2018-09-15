@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
+import { getUserObject, getLoginStatus } from '../../App/selectors';
+import { changeLoginStatus } from '../../App/actions';
 import {
   Bar,
   PictureContainer,
@@ -11,35 +14,42 @@ import {
   Rating,
   Rank,
   Popularity,
+  Profile,
 } from './styles';
 
 class Header extends React.PureComponent {
   static propTypes = {
-    profilePicture: PropTypes.string,
-    rating: PropTypes.number,
-    rank: PropTypes.number,
-    popularity: PropTypes.number,
+    userObject: PropTypes.object,
+    login: PropTypes.bool,
   };
+
   render() {
     return (
       <Bar>
-        <PictureContainer>
-          <ProfilePicture
-            source={
-              this.props.profilePicture ||
-              'http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png'
-            }
-          />
-        </PictureContainer>
+        <Profile>
+          <PictureContainer>
+            <ProfilePicture
+              source={
+                this.props.userObject.imageUrl ||
+                'http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png'
+              }
+            />
+          </PictureContainer>
+          {!this.props.login && (
+            <Link href to="/login">
+              Login
+            </Link>
+          )}
+        </Profile>
         <Stats>
           <Rating>
-            <div>{this.props.rating || '4.7'}</div>
+            <div>{this.props.userObject.rating || '-'}</div>
           </Rating>
           <Rank>
-            <div>{this.props.rank || '539'}</div>
+            <div>{this.props.userObject.rank || '-'}</div>
           </Rank>
           <Popularity>
-            <div>{this.props.popularity || '92'}</div>
+            <div>{this.props.userObject.popularity || '-'}</div>
           </Popularity>
         </Stats>
       </Bar>
@@ -47,10 +57,13 @@ class Header extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  userObject: getUserObject(),
+  login: getLoginStatus(),
+});
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({}, dispatch);
+  return bindActionCreators({ changeLoginStatus }, dispatch);
 }
 
 export default connect(

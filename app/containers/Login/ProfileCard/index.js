@@ -5,10 +5,8 @@ import { withRouter } from 'react-router';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getUserObject } from '../selectors';
-import { getLoginStatus } from '../../App/selectors';
-import { setUserObject } from '../actions';
-import { changeLoginStatus } from '../../App/actions';
+import { getUserObject, getLoginStatus } from '../../App/selectors';
+import { setUserObject, changeLoginStatus } from '../../App/actions';
 import { Login, Form, Title, Motto, Wrapper, ProfilePicture } from './styles';
 
 class ProfileCard extends React.PureComponent {
