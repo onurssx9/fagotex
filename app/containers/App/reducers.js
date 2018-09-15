@@ -11,7 +11,7 @@
  */
 import { fromJS } from 'immutable';
 
-import { LOGIN, USER_OBJECT, SET_USERS } from './constants';
+import { LOGIN, USER_OBJECT, SET_USERS, UPDATE_USER } from './constants';
 
 const comments = () => ({
   recieved: {},
@@ -49,6 +49,10 @@ function globalReducer(state = initialState, action) {
       });
       return state.mergeDeep({ userCards: newUserCards });
     }
+    case UPDATE_USER:
+      return state.mergeDeep({
+        userCards: action.data,
+      });
     default:
       return state;
   }
