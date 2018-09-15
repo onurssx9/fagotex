@@ -4,6 +4,7 @@ import {
   GET_USER_BY_ID,
   UPDATE_USER,
   GET_USERS,
+  ADD_COMMENT,
 } from './constants';
 import { setUserObject, setUsers } from './actions';
 import request from '../../utils/request';
@@ -15,7 +16,8 @@ const horizon = {
   user: {
     get: param => `user/userId=${param}`,
     login: () => 'user/login/',
-    update: () => 'user/login/',
+    update: () => 'user/login/update',
+    addComment: () => 'user/addComment',
   },
   users: {
     get: () => 'users/',
@@ -114,12 +116,45 @@ function* updateUserRequestWatcher() {
   }
 }
 
+function* addCommentRequest(comment) {
+  try {
+    const requestURL = API_ENDPOINT + horizon.user.addComment();
+    const requestOptions = {
+      method: 'POST',
+      body: JSON.stringify(comment),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const response = yield call(request, requestURL, requestOptions);
+    if (response.status) {
+      console.log(response);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function* addCommentRequestWatcher() {
+  while (true) {
+    const action = yield take(ADD_COMMENT);
+    const senderId = (yield select(getUserObject())).googleId;
+    const addCommentPayload = {
+      text: action.data.text,
+      recieverId: action.data.userId,
+      senderId,
+    };
+    yield call(addCommentRequest, addCommentPayload);
+  }
+}
+
 function* rootSaga() {
   yield [
     createUserRequestWatcher,
     getUserByIDRequestWatcher,
     updateUserRequestWatcher,
     getUsersWatcher,
+    addCommentRequestWatcher,
   ].map(saga => call(saga));
 }
 export default rootSaga;
