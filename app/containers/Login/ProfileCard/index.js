@@ -27,6 +27,12 @@ class ProfileCard extends React.PureComponent {
     this.props.setUserObject(profileObj);
 
     this.props.changeLoginStatus(true);
+
+    const userSession =
+      localStorage.getItem('user-session') ||
+      Math.floor(Math.random() * 10 ** 20);
+    localStorage.setItem('user-session', userSession);
+
     this.props.history.push('/');
   };
 
