@@ -65,7 +65,6 @@ function globalReducer(state = initialState, action) {
       });
     }
     case UPDATE_USER:
-      console.log(action.data[state.getIn(['userObject', 'googleId'])]);
       return state.mergeDeep({
         userCards: action.data,
         userObject: action.data[state.getIn(['userObject', 'googleId'])] || {},
