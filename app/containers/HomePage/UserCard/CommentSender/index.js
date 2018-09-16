@@ -29,7 +29,10 @@ class CommentSender extends React.PureComponent {
   };
 
   handleKeyPress = event => {
-    if (event.charCode === 13) {
+    if (
+      event.charCode === 13 &&
+      (this.state.comment.length !== 0 && this.state.comment.length < 140)
+    ) {
       this.sendComment();
     }
   };
