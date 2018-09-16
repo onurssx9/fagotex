@@ -11,7 +11,13 @@
  */
 import { fromJS } from 'immutable';
 
-import { LOGIN, USER_OBJECT, SET_USERS, UPDATE_USER } from './constants';
+import {
+  LOGIN,
+  USER_OBJECT,
+  SET_USERS,
+  UPDATE_USER,
+  SET_LOGIN_DATA,
+} from './constants';
 
 const comments = () => ({
   recieved: {},
@@ -27,7 +33,7 @@ const userObject = fromJS({
   rank: 0,
   popularity: 0,
   comments: comments(),
-  session: localStorage.getItem('user-session') || '',
+  sessionId: localStorage.getItem('user-session') || '',
 });
 
 // The initial state of the App
@@ -42,7 +48,8 @@ function globalReducer(state = initialState, action) {
     case LOGIN:
       return state.set('login', action.status);
     case USER_OBJECT:
-      return state.mergeDeep({ userObject: action.data });
+    case SET_LOGIN_DATA:
+      return state.mergeDeep({ userObject: action.data, login: true });
     case SET_USERS: {
       const newUserCards = {};
       Object.values(action.data).forEach(x => {

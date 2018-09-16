@@ -27,6 +27,10 @@ class UserCard extends React.PureComponent {
     user: PropTypes.object,
   };
 
+  calculatePopularity = () =>
+    Object.keys(this.props.user.comments.recieved).length *
+    this.props.user.rating;
+
   render() {
     return (
       <Card>

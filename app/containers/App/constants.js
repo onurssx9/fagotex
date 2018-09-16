@@ -5,3 +5,4 @@ export const UPDATE_USER = 'App/UPDATE_USER';
 export const GET_USERS = 'App/GET_USERS';
 export const SET_USERS = 'App/SET_USERS';
 export const ADD_COMMENT = 'App/ADD_COMMENT';
+export const SET_LOGIN_DATA = 'App/SET_LOGIN_DATA';

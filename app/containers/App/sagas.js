@@ -5,7 +5,7 @@ import {
   GET_USERS,
   ADD_COMMENT,
 } from './constants';
-import { setUserObject, setUsers } from './actions';
+import { setUserObject, setUsers, setLoginData } from './actions';
 import request from '../../utils/request';
 import { getUserObject } from './selectors';
 import listeners from './listeners';
@@ -37,7 +37,7 @@ function* createUserRequest(userObject) {
     const requestURL = API_ENDPOINT + horizon.user.login();
     const response = yield call(request, requestURL, requestOptions);
     if (response.status) {
-      console.log('create method succeed');
+      yield put(setLoginData(response.userObject));
     }
   } catch (error) {
     console.log(error);

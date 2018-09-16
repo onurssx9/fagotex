@@ -7,7 +7,7 @@ import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 import { getUserObject, getLoginStatus, getUserCards } from '../App/selectors';
-import { changeLoginStatus, getUsers } from '../App/actions';
+import { changeLoginStatus, getUsers, setUserObject } from '../App/actions';
 import reducer from './reducers';
 import saga from './sagas';
 import Header from './Header';
@@ -17,10 +17,12 @@ import { People } from './styles';
 /* eslint-disable react/prefer-stateless-function */
 export class Login extends React.PureComponent {
   componentDidMount() {
+    this.props.setUserObject({});
     this.props.getUsers();
   }
 
   static propTypes = {
+    setUserObject: PropTypes.func,
     userObject: PropTypes.object,
     getUsers: PropTypes.func,
     login: PropTypes.any,
@@ -34,7 +36,13 @@ export class Login extends React.PureComponent {
         <People>
           {Object.values(this.props.userCards).map((user, index) => {
             const key = index;
-            return <UserCard key={key} user={user} />;
+            return (
+              <UserCard
+                key={key}
+                user={user}
+                gid={this.props.userObject.googleId}
+              />
+            );
           })}
         </People>
       </React.Fragment>
@@ -43,7 +51,10 @@ export class Login extends React.PureComponent {
 }
 
 export function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ changeLoginStatus, getUsers }, dispatch);
+  return bindActionCreators(
+    { changeLoginStatus, getUsers, setUserObject },
+    dispatch,
+  );
 }
 
 const mapStateToProps = createStructuredSelector({

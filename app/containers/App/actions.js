@@ -6,6 +6,7 @@ import {
   SET_USERS,
   GET_USERS,
   ADD_COMMENT,
+  SET_LOGIN_DATA,
 } from './constants';
 
 export function changeLoginStatus(status) {
@@ -18,6 +19,13 @@ export function changeLoginStatus(status) {
 export function setUserObject(data) {
   return {
     type: USER_OBJECT,
+    data,
+  };
+}
+
+export function setLoginData(data) {
+  return {
+    type: SET_LOGIN_DATA,
     data,
   };
 }

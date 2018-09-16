@@ -54,23 +54,32 @@ router.get('/', (req, res) => {
   });
 });
 
-router.post('/login', (req, res) => {
-  if (!req.body.googleId) {
-    if (req.body.sessionId) {
-      findUserBySessionId(req.body.sessionId).then(userId => {
-        getUser(userId.val()).then(snapshot => {
-          res.send(snapshot.val());
-        });
-      });
-    }
+router.post('/login', async (req, res) => {
+  if (req.body.sessionId !== '') {
+    const usersData = await findUserBySessionId(req.body.sessionId).then(
+      userId => {
+        if (!userId.exists()) {
+          return false;
+        }
+        return getUser(userId.val());
+      },
+    );
+    res.send({
+      status: !!usersData,
+      message: 'Users already created',
+      userObject: usersData,
+    });
+  }
+  if (req.body.googleId === '') {
     res.send({ status: false, message: 'Missing Parameters' });
   }
 
-  getUser(req.body.googleId).then(snapshot => {
+  if (req.body.googleId !== '') {
+    db.ref(`sessions/${req.body.sessionId}`).set(req.body.googleId);
+  }
+
+  await getUser(req.body.googleId).then(snapshot => {
     if (snapshot.exists()) {
-      if (req.body.sessionId) {
-        db.ref(`sessions/${req.body.sessionId}`).set(req.body.googleId);
-      }
       res.send({
         status: false,
         message: 'Users already created',
@@ -78,7 +87,7 @@ router.post('/login', (req, res) => {
       });
     } else {
       createUser(req.body).then(() => ({
-        status: true,
+        status: false,
         message: 'create succeed',
       }));
     }
@@ -94,13 +103,13 @@ router.post('/update', (req, res) => {
     if (snapshot.exists()) {
       db.ref(`user/${req.body.googleId}`).update(req.body);
       res.send({
-        status: true,
+        status: false,
         message: 'Update Succeed',
         userObject: snapshot.val(),
       });
     }
     createUser(req.body).then(() => ({
-      status: true,
+      status: false,
       message: 'Create succeed',
     }));
   });
