@@ -29,6 +29,8 @@ class ProfileCard extends React.PureComponent {
 
     const { profileObj } = response;
 
+    profileObj.sessionId = userSession;
+
     this.props.setUserObject(profileObj);
 
     this.props.history.push('/');

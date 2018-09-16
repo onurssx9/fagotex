@@ -15,7 +15,7 @@ import UserCard from './UserCard';
 import { People } from './styles';
 
 /* eslint-disable react/prefer-stateless-function */
-export class Login extends React.PureComponent {
+export class Homepage extends React.PureComponent {
   componentDidMount() {
     this.props.setUserObject({});
     this.props.getUsers();
@@ -75,4 +75,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(Login);
+)(Homepage);

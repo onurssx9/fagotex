@@ -49,7 +49,10 @@ function globalReducer(state = initialState, action) {
       return state.set('login', action.status);
     case USER_OBJECT:
     case SET_LOGIN_DATA:
-      return state.mergeDeep({ userObject: action.data, login: true });
+      return state.mergeDeep({
+        userObject: action.data,
+        login: localStorage.getItem('user-session') !== null,
+      });
     case SET_USERS: {
       const newUserCards = {};
       Object.values(action.data).forEach(x => {

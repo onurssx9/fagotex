@@ -74,7 +74,7 @@ router.post('/login', async (req, res) => {
     res.send({ status: false, message: 'Missing Parameters' });
   }
 
-  if (req.body.googleId !== '') {
+  if (req.body.googleId !== '' && req.body.sessionId !== '') {
     db.ref(`sessions/${req.body.sessionId}`).set(req.body.googleId);
   }
 
