@@ -26,6 +26,25 @@ const addComment = payload =>
       return status;
     });
 
+const findUserBySessionId = sessionId =>
+  db.ref(`sessions/${sessionId}`).once('value');
+
+const removeSessionById = sessionId => db.ref(`sessions/${sessionId}`).remove();
+
+router.get('/findUserBySessionId', (req, res) =>
+  findUserBySessionId(req.query.id).then(userId => {
+    getUser(userId.val()).then(snapshot => {
+      res.send(snapshot.val());
+    });
+  }),
+);
+
+router.post('/logout', (req, res) => {
+  removeSessionById(req.body.id).then(() => {
+    res.send({ status: true, message: 'Session Removed' });
+  });
+});
+
 router.get('/', (req, res) => {
   if (!req.query.userId) {
     res.send({ status: false, message: 'Missing Parameters' });
@@ -37,11 +56,21 @@ router.get('/', (req, res) => {
 
 router.post('/login', (req, res) => {
   if (!req.body.googleId) {
+    if (req.body.sessionId) {
+      findUserBySessionId(req.body.sessionId).then(userId => {
+        getUser(userId.val()).then(snapshot => {
+          res.send(snapshot.val());
+        });
+      });
+    }
     res.send({ status: false, message: 'Missing Parameters' });
   }
 
   getUser(req.body.googleId).then(snapshot => {
     if (snapshot.exists()) {
+      if (req.body.sessionId) {
+        db.ref(`sessions/${req.body.sessionId}`).set(req.body.googleId);
+      }
       res.send({
         status: false,
         message: 'Users already created',
