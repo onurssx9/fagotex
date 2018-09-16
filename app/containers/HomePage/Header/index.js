@@ -18,7 +18,7 @@ import {
 class Header extends React.PureComponent {
   static propTypes = {
     userObject: PropTypes.object,
-    login: PropTypes.bool,
+    login: PropTypes.any,
   };
 
   render() {

@@ -5,14 +5,13 @@ import { withRouter } from 'react-router';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getUserObject, getLoginStatus } from '../../App/selectors';
-import { setUserObject, changeLoginStatus } from '../../App/actions';
+import { getUserObject } from '../../App/selectors';
+import { setUserObject } from '../../App/actions';
 import { Login, Form, Title, Motto, Wrapper, ProfilePicture } from './styles';
 
 class ProfileCard extends React.PureComponent {
   static propTypes = {
     setUserObject: PropTypes.func,
-    changeLoginStatus: PropTypes.func,
     userObject: PropTypes.object,
     history: PropTypes.any,
   };
@@ -23,15 +22,14 @@ class ProfileCard extends React.PureComponent {
       throw new Error(response.error);
     }
 
-    const { profileObj } = response;
-    this.props.setUserObject(profileObj);
-
-    this.props.changeLoginStatus(true);
-
     const userSession =
       localStorage.getItem('user-session') ||
       Math.floor(Math.random() * 10 ** 20);
     localStorage.setItem('user-session', userSession);
+
+    const { profileObj } = response;
+
+    this.props.setUserObject(profileObj);
 
     this.props.history.push('/');
   };
@@ -71,11 +69,10 @@ class ProfileCard extends React.PureComponent {
 
 const mapStateToProps = createStructuredSelector({
   userObject: getUserObject(),
-  login: getLoginStatus(),
 });
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setUserObject, changeLoginStatus }, dispatch);
+  return bindActionCreators({ setUserObject }, dispatch);
 }
 
 export default connect(

@@ -27,6 +27,7 @@ const userObject = fromJS({
   rank: 0,
   popularity: 0,
   comments: comments(),
+  session: localStorage.getItem('user-session') || '',
 });
 
 // The initial state of the App
