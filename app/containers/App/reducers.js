@@ -38,7 +38,7 @@ const userObject = fromJS({
 
 // The initial state of the App
 export const initialState = fromJS({
-  login: false,
+  login: localStorage.getItem('user-session') !== null,
   userObject,
   userCards: {},
 });
@@ -55,14 +55,15 @@ function globalReducer(state = initialState, action) {
       });
     case SET_USERS: {
       const newUserCards = {};
-      Object.values(action.data).forEach(x => {
-        newUserCards[x.googleId] = userObject.mergeDeep(x);
+      Object.values(action.data).forEach(card => {
+        newUserCards[card.googleId] = userObject.mergeDeep(card);
       });
       return state.mergeDeep({ userCards: newUserCards });
     }
     case UPDATE_USER:
       return state.mergeDeep({
         userCards: action.data,
+        userObject: action.data[state.getIn(['userObject', 'googleId'])] || {},
       });
     default:
       return state;
