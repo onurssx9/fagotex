@@ -17,6 +17,7 @@ import {
   SET_USERS,
   UPDATE_USER,
   SET_LOGIN_DATA,
+  REMOVE_LOGIN_DATA,
 } from './constants';
 
 const comments = () => ({
@@ -58,13 +59,19 @@ function globalReducer(state = initialState, action) {
       Object.values(action.data).forEach(card => {
         newUserCards[card.googleId] = userObject.mergeDeep(card);
       });
-      return state.mergeDeep({ userCards: newUserCards });
+      return state.mergeDeep({
+        userCards: newUserCards,
+        userObject: newUserCards[state.getIn(['userObject', 'googleId'])] || {},
+      });
     }
     case UPDATE_USER:
+      console.log(action.data[state.getIn(['userObject', 'googleId'])]);
       return state.mergeDeep({
         userCards: action.data,
         userObject: action.data[state.getIn(['userObject', 'googleId'])] || {},
       });
+    case REMOVE_LOGIN_DATA:
+      return state.set('userObject', userObject);
     default:
       return state;
   }

@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
+import { logoutUser } from '../../App/actions';
 import {
   Bar,
   PictureContainer,
@@ -19,6 +20,12 @@ class Header extends React.PureComponent {
   static propTypes = {
     userObject: PropTypes.object,
     login: PropTypes.any,
+    logoutUser: PropTypes.func,
+  };
+
+  removeSessionId = () => {
+    this.props.logoutUser(localStorage.getItem('user-session'));
+    localStorage.removeItem('user-session');
   };
 
   render() {
@@ -28,9 +35,18 @@ class Header extends React.PureComponent {
           <PictureContainer>
             <ProfilePicture source={this.props.userObject.imageUrl} />
           </PictureContainer>
-          {!this.props.login && (
+          {!this.props.login ? (
             <Link href to="/login">
               Login
+            </Link>
+          ) : (
+            <Link
+              onClick={this.removeSessionId}
+              className="logout"
+              href
+              to="/login"
+            >
+              Logout
             </Link>
           )}
         </Profile>
@@ -56,7 +72,7 @@ class Header extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({});
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({}, dispatch);
+  return bindActionCreators({ logoutUser }, dispatch);
 }
 
 export default connect(

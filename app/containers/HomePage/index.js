@@ -21,9 +21,6 @@ export class Homepage extends React.PureComponent {
     if (!this.props.login) {
       this.props.history.push('/login');
     }
-  }
-
-  componentDidMount() {
     this.props.setUserObject({});
     this.props.getUsers();
   }

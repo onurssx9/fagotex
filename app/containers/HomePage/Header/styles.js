@@ -23,6 +23,10 @@ export const Bar = styled.div`
     text-decoration: none;
     text-align: center;
     align-self: flex-start;
+
+    &.logout {
+      background: ${Attributes.red};
+    }
   }
 `;
 

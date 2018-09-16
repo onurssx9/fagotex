@@ -59,7 +59,6 @@ class ProfileCard extends React.PureComponent {
                 className="googleLogin"
                 onSuccess={response => this.responseGoogle(response)}
                 onFailure={response => this.responseGoogle(response)}
-                isSignedIn
               />
             </Wrapper>
           </Form>
