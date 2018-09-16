@@ -4,6 +4,7 @@ build
 node_modules
 stats.json
 yarn.lock
+.firebase
 
 # Cruft
 .DS_Store
