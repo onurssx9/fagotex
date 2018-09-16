@@ -6,8 +6,10 @@ const db = firebase.auth().app.database();
 
 const getUser = userId => db.ref(`users/${userId}`).once('value');
 
-const createUser = userObject =>
+const createUser = userObject => {
+  if (userObject.googleId === '') return;
   db.ref(`users/${userObject.googleId}`).set(userObject);
+};
 
 const addComment = payload =>
   db

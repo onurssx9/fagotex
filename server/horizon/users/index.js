@@ -9,7 +9,7 @@ router.get('/', (_, res) => {
     'value',
     snapshot => {
       res.send({
-        status: true,
+        status: snapshot.exists(),
         users: snapshot.val(),
       });
     },
