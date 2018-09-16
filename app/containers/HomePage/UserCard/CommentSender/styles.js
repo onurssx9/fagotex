@@ -1,3 +1,4 @@
+/* eslint-disable */
 import styled from 'styled-components';
 import { Attributes } from '../../../theme';
 
@@ -20,15 +21,34 @@ export const SendComment = styled.button`
   width: 30%;
   height: 100%;
   outline: none;
-  padding: 5px;
-  border-radius: 2px;
-  background: ${Attributes.green};
+  padding: 0px;
   color: white;
-  transition: all 0.5s ease;
   cursor: pointer;
+  position: relative;
+  pointer-events: ${props =>
+    props.length > 140 || props.length === 0 ? 'none' : 'unset'};
+
+  &:after {
+    content: "${props => (props.length > 0 ? `${props.length}/140` : 'Send')}";
+    display: flex;
+    flex: 1;
+    align-items: center;
+    border-radius: 2px;
+    justify-content: center;
+    padding: 5px;
+    transition: all 0.5s ease;
+    background: ${props =>
+      props.length > 140 || props.length === 0
+        ? Attributes.grey
+        : Attributes.green};
+  }
 
   &:hover {
-    background: ${Attributes.greenHighlight};
-    border-radius: 5px;
+    &:after {
+      content: "Send";
+      transition: all 0.5s ease;
+      background: ${Attributes.greenHighlight};
+      border-radius: 5px;
+    }
   }
 `;

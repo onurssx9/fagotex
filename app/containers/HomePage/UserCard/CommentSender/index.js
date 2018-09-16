@@ -43,7 +43,10 @@ class CommentSender extends React.PureComponent {
           placeholder="Enter your comment"
           onKeyPress={event => this.handleKeyPress(event)}
         />
-        <SendComment onClick={this.sendComment}>Send</SendComment>
+        <SendComment
+          length={this.state.comment.length}
+          onClick={this.sendComment}
+        />
       </React.Fragment>
     );
   }
