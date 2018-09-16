@@ -23,7 +23,7 @@ export class Login extends React.PureComponent {
   static propTypes = {
     userObject: PropTypes.object,
     getUsers: PropTypes.func,
-    login: PropTypes.bool,
+    login: PropTypes.any,
     userCards: PropTypes.object,
   };
 
