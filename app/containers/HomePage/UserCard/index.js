@@ -15,16 +15,28 @@ import {
 import CommentSender from './CommentSender';
 
 class UserCard extends React.PureComponent {
+  state = {
+    commentCount: Object.keys(this.props.user.comments.recieved).length,
+  };
+
   componentDidMount() {
     this.commentBox.scrollTop = this.commentBox.scrollHeight;
   }
 
   componentDidUpdate() {
-    this.commentBox.scrollTop = this.commentBox.scrollHeight;
+    const updatedCount = Object.keys(this.props.user.comments.recieved).length;
+    if (this.state.commentCount !== updatedCount) {
+      this.commentBox.scrollTop = this.commentBox.scrollHeight;
+      this.updateLocalCount(updatedCount);
+    }
   }
 
   static propTypes = {
     user: PropTypes.object,
+  };
+
+  updateLocalCount = updatedCount => {
+    this.setState({ commentCount: updatedCount });
   };
 
   calculatePopularity = () =>
@@ -36,12 +48,7 @@ class UserCard extends React.PureComponent {
       <Card>
         <Block flex="3" className="column">
           <Block flex="3">
-            <Picture
-              src={
-                this.props.user.imageUrl ||
-                'http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png'
-              }
-            />
+            <Picture src={this.props.user.imageUrl} />
           </Block>
           <Block flex="2">
             <UserTitle>{this.props.user.name || 'John Doe'}</UserTitle>
