@@ -1,0 +1,72 @@
+{
+  "icons": [
+    {
+      "src": "/icon_512x512.5681b9640222e44026270a76acac1e44.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_384x384.5bbdaced55a2a8db76a167b6a3ef5fe1.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_375x375.05c2f269bba8e83c6b219da976d83f30.png",
+      "sizes": "375x375",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_192x192.e9f209799216f5c26670fee66524333a.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_180x180.ba446793af1db042e48c92ef7f498cf2.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_167x167.5c9bc51e1374fbc82c16a5bc16c9ee00.png",
+      "sizes": "167x167",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_152x152.bb2e9a84adf9d0db2db10c82cf373d17.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_144x144.63b8d4889d06c1218e31dfe3af980f22.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_128x128.85245798d8452dd1e358e50b3d7e06e4.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_120x120.0b0b477fccceaf6d16bbb02471e85bc5.png",
+      "sizes": "120x120",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_96x96.08b752cd9cbac51f2a15f5cd0ee17f09.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_72x72.8632ea3592c629092f341fcf06d09b88.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    }
+  ],
+  "name": "Fagotex",
+  "short_name": "Fagotex",
+  "orientation": "portrait",
+  "display": "standalone",
+  "start_url": ".",
+  "description": "Anonymous social network.",
+  "background_color": "#454545",
+  "theme_color": "#252525"
+}
