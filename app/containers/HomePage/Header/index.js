@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
+import { logoutUser } from '../../App/actions';
 import {
   Bar,
   PictureContainer,
@@ -19,6 +20,12 @@ class Header extends React.PureComponent {
   static propTypes = {
     userObject: PropTypes.object,
     login: PropTypes.any,
+    logoutUser: PropTypes.func,
+  };
+
+  removeSessionId = () => {
+    this.props.logoutUser(localStorage.getItem('user-session'));
+    localStorage.removeItem('user-session');
   };
 
   render() {
@@ -26,16 +33,20 @@ class Header extends React.PureComponent {
       <Bar>
         <Profile>
           <PictureContainer>
-            <ProfilePicture
-              source={
-                this.props.userObject.imageUrl ||
-                'http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png'
-              }
-            />
+            <ProfilePicture source={this.props.userObject.imageUrl} />
           </PictureContainer>
-          {!this.props.login && (
+          {!this.props.login ? (
             <Link href to="/login">
               Login
+            </Link>
+          ) : (
+            <Link
+              onClick={this.removeSessionId}
+              className="logout"
+              href
+              to="/login"
+            >
+              Logout
             </Link>
           )}
         </Profile>
@@ -47,7 +58,10 @@ class Header extends React.PureComponent {
             <div>{this.props.userObject.rank || '-'}</div>
           </Rank>
           <Popularity>
-            <div>{this.props.userObject.popularity || '-'}</div>
+            <div>
+              {Object.keys(this.props.userObject.comments.recieved).length ||
+                '-'}
+            </div>
           </Popularity>
         </Stats>
       </Bar>
@@ -58,7 +72,7 @@ class Header extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({});
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({}, dispatch);
+  return bindActionCreators({ logoutUser }, dispatch);
 }
 
 export default connect(

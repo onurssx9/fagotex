@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import { getUserObject } from '../../App/selectors';
 import { setUserObject } from '../../App/actions';
 import { Login, Form, Title, Motto, Wrapper, ProfilePicture } from './styles';
+import BlankPhoto from './blankProfile.png';
 
 class ProfileCard extends React.PureComponent {
   static propTypes = {
@@ -42,10 +43,7 @@ class ProfileCard extends React.PureComponent {
         <Login>
           <Form>
             <ProfilePicture
-              source={
-                this.props.userObject.imageUrl ||
-                'http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png'
-              }
+              source={this.props.userObject.imageUrl || BlankPhoto}
             />
             <Title>{this.props.userObject.name || 'Fagotex'}</Title>
             <Motto>
@@ -59,7 +57,6 @@ class ProfileCard extends React.PureComponent {
                 className="googleLogin"
                 onSuccess={response => this.responseGoogle(response)}
                 onFailure={response => this.responseGoogle(response)}
-                isSignedIn
               />
             </Wrapper>
           </Form>

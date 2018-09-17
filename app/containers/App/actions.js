@@ -7,6 +7,7 @@ import {
   GET_USERS,
   ADD_COMMENT,
   SET_LOGIN_DATA,
+  REMOVE_LOGIN_DATA,
 } from './constants';
 
 export function changeLoginStatus(status) {
@@ -26,6 +27,13 @@ export function setUserObject(data) {
 export function setLoginData(data) {
   return {
     type: SET_LOGIN_DATA,
+    data,
+  };
+}
+
+export function logoutUser(data) {
+  return {
+    type: REMOVE_LOGIN_DATA,
     data,
   };
 }

@@ -1,8 +1,10 @@
 # Don't check auto-generated stuff into git
 coverage
-build
 node_modules
 stats.json
+build
+yarn.lock
+.firebase
 
 # Cruft
 .DS_Store

@@ -23,6 +23,10 @@ export const Bar = styled.div`
     text-decoration: none;
     text-align: center;
     align-self: flex-start;
+
+    &.logout {
+      background: ${Attributes.red};
+    }
   }
 `;
 
@@ -40,7 +44,7 @@ export const ProfilePicture = styled.div`
   width: 60px;
   height: 60px;
   border-radius: 100%;
-  background: url(${props => props.source});
+  background: url(${props => props.source}), ${Attributes.primaryLight};
   background-size: contain;
   transition: all 0.5s ease;
 `;

@@ -70,15 +70,15 @@ module.exports = require('./webpack.base.babel')({
     }),
 
     new WebpackPwaManifest({
-      name: 'React Boilerplate',
-      short_name: 'React BP',
-      description: 'My React Boilerplate-based project!',
-      background_color: '#fafafa',
-      theme_color: '#b1624d',
+      name: 'Fagotex',
+      short_name: 'Fagotex',
+      description: 'Anonymous social network.',
+      background_color: '#454545',
+      theme_color: '#252525',
       icons: [
         {
-          src: path.resolve('app/images/icon-512x512.png'),
-          sizes: [72, 96, 120, 128, 144, 152, 167, 180, 192, 384, 512],
+          src: path.resolve('app/images/icon-375x375.png'),
+          sizes: [72, 96, 120, 128, 144, 152, 167, 180, 192, 375, 384, 512],
         },
       ],
     }),

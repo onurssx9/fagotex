@@ -4,6 +4,7 @@ import {
   GET_USER_BY_ID,
   GET_USERS,
   ADD_COMMENT,
+  REMOVE_LOGIN_DATA,
 } from './constants';
 import { setUserObject, setUsers, setLoginData } from './actions';
 import request from '../../utils/request';
@@ -18,6 +19,7 @@ const horizon = {
     login: () => 'user/login/',
     update: () => 'user/login/update',
     addComment: () => 'user/addComment',
+    logout: () => 'user/logout',
   },
   users: {
     get: () => 'users/',
@@ -119,6 +121,29 @@ function* addCommentRequestWatcher() {
   }
 }
 
+function* logoutRequest(comment) {
+  try {
+    const requestURL = API_ENDPOINT + horizon.user.logout();
+    const requestOptions = {
+      method: 'POST',
+      body: JSON.stringify(comment),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    yield call(request, requestURL, requestOptions);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function* logoutRequestWatcher() {
+  while (true) {
+    const action = yield take(REMOVE_LOGIN_DATA);
+    yield call(logoutRequest, { id: action.data });
+  }
+}
+
 function* rootSaga() {
   yield [
     createUserRequestWatcher,
@@ -126,6 +151,7 @@ function* rootSaga() {
     getUsersWatcher,
     addCommentRequestWatcher,
     listeners,
+    logoutRequestWatcher,
   ].map(saga => call(saga));
 }
 export default rootSaga;

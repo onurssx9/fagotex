@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, bindActionCreators } from 'redux';
 import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router';
 
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
@@ -16,7 +17,10 @@ import { People } from './styles';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Homepage extends React.PureComponent {
-  componentDidMount() {
+  componentWillMount() {
+    if (!this.props.login) {
+      this.props.history.push('/login');
+    }
     this.props.setUserObject({});
     this.props.getUsers();
   }
@@ -27,6 +31,7 @@ export class Homepage extends React.PureComponent {
     getUsers: PropTypes.func,
     login: PropTypes.any,
     userCards: PropTypes.object,
+    history: PropTypes.any,
   };
 
   render() {
@@ -75,4 +80,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(Homepage);
+)(withRouter(Homepage));
