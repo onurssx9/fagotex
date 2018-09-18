@@ -11,7 +11,7 @@ import { getUserObject, getLoginStatus, getUserCards } from '../App/selectors';
 import { changeLoginStatus, getUsers, setUserObject } from '../App/actions';
 import reducer from './reducers';
 import saga from './sagas';
-import Header from './Header';
+import Header from '../../components/Header';
 import UserCard from './UserCard';
 import { People } from './styles';
 

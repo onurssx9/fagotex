@@ -7,3 +7,4 @@ export const SET_USERS = 'App/SET_USERS';
 export const ADD_COMMENT = 'App/ADD_COMMENT';
 export const SET_LOGIN_DATA = 'App/SET_LOGIN_DATA';
 export const REMOVE_LOGIN_DATA = 'App/REMOVE_LOGIN_DATA';
+export const DELETE_COMMENT = 'App/DELETE_COMMENT';

@@ -33,6 +33,11 @@ const findUserBySessionId = sessionId =>
 
 const removeSessionById = sessionId => db.ref(`sessions/${sessionId}`).remove();
 
+const deleteCommentById = payload =>
+  db
+    .ref(`users/${payload.userId}/comments/recieved/${payload.commentId}`)
+    .remove();
+
 router.get('/findUserBySessionId', (req, res) =>
   findUserBySessionId(req.query.id).then(userId => {
     getUser(userId.val()).then(snapshot => {
@@ -40,6 +45,12 @@ router.get('/findUserBySessionId', (req, res) =>
     });
   }),
 );
+
+router.post('/deleteComment', (req, res) => {
+  deleteCommentById(req.body).then(() => {
+    res.send({ status: true, message: 'Comment Deleted' });
+  });
+});
 
 router.post('/logout', (req, res) => {
   removeSessionById(req.body.id).then(() => {

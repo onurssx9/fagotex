@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Attributes } from '../../theme';
+import { Attributes } from '../../containers/theme';
 
 export const Bar = styled.div`
   display: flex;
@@ -19,13 +19,21 @@ export const Bar = styled.div`
   a {
     color: white;
     width: 100%;
+    height: 50px;
     background: ${Attributes.green};
     text-decoration: none;
     text-align: center;
     align-self: flex-start;
+    z-index: 999;
 
     &.logout {
       background: ${Attributes.red};
+    }
+
+    &.user {
+      background: transparent;
+      height: 100%;
+      position: absolute;
     }
   }
 `;
@@ -38,6 +46,7 @@ export const Profile = styled.div`
   width: 80px;
   height: 80px;
   background: ${Attributes.primaryLight};
+  position: relative;
 `;
 
 export const ProfilePicture = styled.div`
@@ -69,6 +78,7 @@ export const PictureContainer = styled.div`
 export const Rating = styled.div`
   justify-content: space-evenly;
   align-items: flex-start;
+  position: relative;
 
   &:before {
     content: '⭐';
@@ -89,6 +99,7 @@ export const Rating = styled.div`
 export const Rank = styled.div`
   justify-content: space-evenly;
   align-items: flex-start;
+  position: relative;
 
   &:before {
     content: '#';
@@ -111,6 +122,7 @@ export const Rank = styled.div`
 export const Popularity = styled.div`
   justify-content: space-evenly;
   align-items: flex-start;
+  position: relative;
 
   &:before {
     content: '💬';
@@ -131,6 +143,12 @@ export const Popularity = styled.div`
 export const Stats = styled.div`
   width: 100%;
   justify-content: flex-start;
+
+  a {
+    background: transparent;
+    height: 100%;
+    position: absolute;
+  }
 
   > div {
     width: 100%;

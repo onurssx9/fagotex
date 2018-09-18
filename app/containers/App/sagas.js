@@ -5,6 +5,7 @@ import {
   GET_USERS,
   ADD_COMMENT,
   REMOVE_LOGIN_DATA,
+  DELETE_COMMENT,
 } from './constants';
 import { setUserObject, setUsers, setLoginData } from './actions';
 import request from '../../utils/request';
@@ -20,6 +21,7 @@ const horizon = {
     update: () => 'user/login/update',
     addComment: () => 'user/addComment',
     logout: () => 'user/logout',
+    deletecomment: () => 'user/deleteComment',
   },
   users: {
     get: () => 'users/',
@@ -140,7 +142,39 @@ function* logoutRequest(comment) {
 function* logoutRequestWatcher() {
   while (true) {
     const action = yield take(REMOVE_LOGIN_DATA);
-    yield call(logoutRequest, { id: action.data });
+    const requestPaylod = {
+      userId: action.data.userId,
+      commentId: action.data.commentId,
+    };
+    yield call(logoutRequest, requestPaylod);
+  }
+}
+
+function* deleteCommentRequest(comment) {
+  try {
+    const requestURL = API_ENDPOINT + horizon.user.deletecomment();
+    const requestOptions = {
+      method: 'POST',
+      body: JSON.stringify(comment),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    yield call(request, requestURL, requestOptions);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function* deleteCommentRequestWatcher() {
+  while (true) {
+    const action = yield take(DELETE_COMMENT);
+    const requestPayload = {
+      userId: action.data.userId,
+      commentId: action.data.commentId,
+    };
+
+    yield call(deleteCommentRequest, requestPayload);
   }
 }
 
@@ -152,6 +186,7 @@ function* rootSaga() {
     addCommentRequestWatcher,
     listeners,
     logoutRequestWatcher,
+    deleteCommentRequestWatcher,
   ].map(saga => call(saga));
 }
 export default rootSaga;

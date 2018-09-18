@@ -8,6 +8,7 @@ import {
   ADD_COMMENT,
   SET_LOGIN_DATA,
   REMOVE_LOGIN_DATA,
+  DELETE_COMMENT,
 } from './constants';
 
 export function changeLoginStatus(status) {
@@ -54,6 +55,13 @@ export function getUsers() {
 export function addComment(data) {
   return {
     type: ADD_COMMENT,
+    data,
+  };
+}
+
+export function deleteComment(data) {
+  return {
+    type: DELETE_COMMENT,
     data,
   };
 }

@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
-import { logoutUser } from '../../App/actions';
+import { logoutUser } from '../../containers/App/actions';
 import {
   Bar,
   PictureContainer,
@@ -33,6 +33,7 @@ class Header extends React.PureComponent {
       <Bar>
         <Profile>
           <PictureContainer>
+            <Link className="user" href to="/" />
             <ProfilePicture source={this.props.userObject.imageUrl} />
           </PictureContainer>
           {!this.props.login ? (
@@ -58,6 +59,7 @@ class Header extends React.PureComponent {
             <div>{this.props.userObject.rank || '-'}</div>
           </Rank>
           <Popularity>
+            <Link className="messages" href to="/messages" />
             <div>
               {Object.keys(this.props.userObject.comments.recieved).length ||
                 '-'}
