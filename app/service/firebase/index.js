@@ -1,4 +1,5 @@
-const firebase = require('firebase');
+import firebase from 'firebase';
+
 const config = {
   apiKey: 'AIzaSyBcR-rpqnkH0-rHntMJmk1-PiGXjQknfoU',
   authDomain: 'fagotex-f6586.firebaseapp.com',
@@ -9,4 +10,10 @@ const config = {
 };
 firebase.initializeApp(config);
 
-module.exports = firebase;
+// const db = firebase.firestore();
+
+// db.settings({
+//   timestampsInSnapshots: true,
+// });
+
+export default firebase;

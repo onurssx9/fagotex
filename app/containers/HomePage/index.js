@@ -7,8 +7,6 @@ import { withRouter } from 'react-router';
 
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
-import { getUserObject, getLoginStatus, getUserCards } from '../App/selectors';
-import { changeLoginStatus, getUsers, setUserObject } from '../App/actions';
 import reducer from './reducers';
 import saga from './sagas';
 import Header from '../../components/Header';
@@ -17,22 +15,9 @@ import { People } from './styles';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Homepage extends React.PureComponent {
-  componentWillMount() {
-    if (!this.props.login) {
-      this.props.history.push('/login');
-    }
-    this.props.setUserObject({});
-    this.props.getUsers();
-  }
+  componentWillMount() {}
 
-  static propTypes = {
-    setUserObject: PropTypes.func,
-    userObject: PropTypes.object,
-    getUsers: PropTypes.func,
-    login: PropTypes.any,
-    userCards: PropTypes.object,
-    history: PropTypes.any,
-  };
+  static propTypes = {};
 
   render() {
     return (
@@ -56,17 +41,10 @@ export class Homepage extends React.PureComponent {
 }
 
 export function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    { changeLoginStatus, getUsers, setUserObject },
-    dispatch,
-  );
+  return bindActionCreators({}, dispatch);
 }
 
-const mapStateToProps = createStructuredSelector({
-  userObject: getUserObject(),
-  login: getLoginStatus(),
-  userCards: getUserCards(),
-});
+const mapStateToProps = createStructuredSelector({});
 
 const withConnect = connect(
   mapStateToProps,

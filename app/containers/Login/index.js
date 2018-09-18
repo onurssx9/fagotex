@@ -11,18 +11,12 @@ import ProfileCard from './ProfileCard';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Login extends React.PureComponent {
-  componentWillMount() {
-    const userSession = localStorage.getItem('user-session');
-    this.props.changeLoginStatus(userSession);
-  }
+  componentWillMount() {}
 
-  static propTypes = {
-    changeLoginStatus: PropTypes.func,
-    login: PropTypes.any,
-  };
+  static propTypes = {};
 
   render() {
-    if (this.props.login) {
+    if (false) {
       return <Redirect to="/" />;
     }
     return <ProfileCard />;
@@ -30,10 +24,10 @@ export class Login extends React.PureComponent {
 }
 
 export function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ changeLoginStatus }, dispatch);
+  return bindActionCreators({}, dispatch);
 }
 
-const mapStateToProps = createStructuredSelector({ login: getLoginStatus() });
+const mapStateToProps = createStructuredSelector({});
 
 const withConnect = connect(
   mapStateToProps,

@@ -4,8 +4,6 @@ import { withRouter } from 'react-router';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getUserObject, getLoginStatus } from '../App/selectors';
-import { setUserObject, deleteComment } from '../App/actions';
 import {
   RecievedMessages,
   Comments,
@@ -17,27 +15,11 @@ import {
 import Header from '../../components/Header';
 
 class Messages extends React.PureComponent {
-  componentWillMount() {
-    if (!this.props.login) {
-      this.props.history.push('/login');
-    }
-    this.props.setUserObject({});
-  }
+  componentWillMount() {}
 
-  static propTypes = {
-    setUserObject: PropTypes.func,
-    userObject: PropTypes.object,
-    deleteComment: PropTypes.func,
-    history: PropTypes.any,
-    login: PropTypes.bool,
-  };
+  static propTypes = {};
 
-  deleteCommentEvent = event => {
-    this.props.deleteComment({
-      userId: this.props.userObject.googleId,
-      commentId: event.target.id,
-    });
-  };
+  deleteCommentEvent = event => {};
 
   render() {
     return (
@@ -71,13 +53,10 @@ class Messages extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-  userObject: getUserObject(),
-  login: getLoginStatus(),
-});
+const mapStateToProps = createStructuredSelector({});
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setUserObject, deleteComment }, dispatch);
+  return bindActionCreators({}, dispatch);
 }
 
 export default connect(

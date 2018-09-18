@@ -1,62 +1,44 @@
 import React from 'react';
-import GoogleLogin from 'react-google-login';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { createStructuredSelector } from 'reselect';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getUserObject } from '../../App/selectors';
-import { setUserObject } from '../../App/actions';
 import { Login, Form, Title, Motto, Wrapper, ProfilePicture } from './styles';
 import BlankPhoto from './blankProfile.png';
+import firebase from '../../../service/firebase';
+
+const uiConfig = {
+  // Popup signin flow rather than redirect flow.
+  signInFlow: 'popup',
+  // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
+  signInSuccessUrl: '/',
+  // We will display Google and Facebook as auth providers.
+  signInOptions: [
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+  ],
+};
 
 class ProfileCard extends React.PureComponent {
-  static propTypes = {
-    setUserObject: PropTypes.func,
-    userObject: PropTypes.object,
-    history: PropTypes.any,
-  };
-
-  responseGoogle = response => {
-    if (response.error) {
-      if (response.error === 'popup_closed_by_user') return;
-      throw new Error(response.error);
-    }
-
-    const userSession =
-      localStorage.getItem('user-session') ||
-      Math.floor(Math.random() * 10 ** 20);
-    localStorage.setItem('user-session', userSession);
-
-    const { profileObj } = response;
-
-    profileObj.sessionId = userSession;
-
-    this.props.setUserObject(profileObj);
-
-    this.props.history.push('/');
-  };
+  static propTypes = {};
 
   render() {
     return (
       <React.Fragment>
         <Login>
           <Form>
-            <ProfilePicture
-              source={this.props.userObject.imageUrl || BlankPhoto}
-            />
-            <Title>{this.props.userObject.name || 'Fagotex'}</Title>
+            <ProfilePicture source={BlankPhoto} />
+            <Title>Fagotex</Title>
             <Motto>
               To keep your secret is wisdom; but to expect others to keep it is
               folly.
             </Motto>
             <Wrapper>
-              <GoogleLogin
-                clientId="903355575028-58hse89u1r0s9d0fr9aoelht2jrcq1cj.apps.googleusercontent.com"
-                buttonText="Enter"
-                className="googleLogin"
-                onSuccess={response => this.responseGoogle(response)}
-                onFailure={response => this.responseGoogle(response)}
+              <StyledFirebaseAuth
+                uiConfig={uiConfig}
+                firebaseAuth={firebase.auth()}
               />
             </Wrapper>
           </Form>
@@ -66,12 +48,10 @@ class ProfileCard extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-  userObject: getUserObject(),
-});
+const mapStateToProps = createStructuredSelector({});
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setUserObject }, dispatch);
+  return bindActionCreators({}, dispatch);
 }
 
 export default connect(
