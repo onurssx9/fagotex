@@ -4,8 +4,6 @@ import { compose, bindActionCreators } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { getLoginStatus } from '../App/selectors';
-import { changeLoginStatus } from '../App/actions';
 
 import ProfileCard from './ProfileCard';
 
