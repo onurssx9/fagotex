@@ -16,7 +16,7 @@ import CommentSender from './CommentSender';
 
 class UserCard extends React.PureComponent {
   state = {
-    commentCount: Object.keys(this.props.user.comments.recieved).length,
+    commentCount: (() => this.props.user.comments.length)(),
   };
 
   componentDidMount() {
@@ -24,7 +24,7 @@ class UserCard extends React.PureComponent {
   }
 
   componentDidUpdate() {
-    const updatedCount = Object.keys(this.props.user.comments.recieved).length;
+    const updatedCount = this.props.user.comments.length;
     if (this.state.commentCount !== updatedCount) {
       this.commentBox.scrollTop = this.commentBox.scrollHeight;
       this.updateLocalCount(updatedCount);
@@ -40,25 +40,23 @@ class UserCard extends React.PureComponent {
   };
 
   calculatePopularity = () =>
-    Object.keys(this.props.user.comments.recieved).length *
-    this.props.user.rating;
+    this.props.user.comments.length * this.props.user.rating;
 
   render() {
     return (
       <Card>
         <Block flex="3" className="column">
           <Block flex="3">
-            <Picture src={this.props.user.imageUrl} />
+            <Picture src={this.props.user.photoURL} />
           </Block>
           <Block flex="2">
-            <UserTitle>{this.props.user.name || 'John Doe'}</UserTitle>
+            <UserTitle>{this.props.user.displayName || 'John Doe'}</UserTitle>
           </Block>
           <Block flex="1" className="row stats">
             <Stat type="rating">{this.props.user.rating || '-'}</Stat>
             <Stat type="rank">{this.props.user.rank || '-'}</Stat>
             <Stat type="popularity">
-              {Object.keys(this.props.user.comments.recieved).length *
-                this.props.user.rating || '-'}
+              {this.props.user.comments.length * this.props.user.rating || '-'}
             </Stat>
           </Block>
         </Block>
@@ -68,17 +66,15 @@ class UserCard extends React.PureComponent {
               this.commentBox = elem;
             }}
           >
-            {Object.values(this.props.user.comments.recieved).map(
-              (comment, index) => {
-                const key = index;
-                return <Comment key={key}>{comment.text}</Comment>;
-              },
-            )}
+            {this.props.user.comments.map((comment, index) => {
+              const key = index;
+              return <Comment key={key}>{comment.text}</Comment>;
+            })}
           </Comments>
         </Block>
         <Block flex="1" className="row">
           <Block flex="3" className="row">
-            <CommentSender userId={this.props.user.googleId} />
+            <CommentSender userId={this.props.user.email} />
           </Block>
         </Block>
       </Card>

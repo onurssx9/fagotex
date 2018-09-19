@@ -8,6 +8,7 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
 import globalReducer from 'containers/App/reducers';
+import { SET_LOGOUT_CURRENT_USER } from './containers/App/constants';
 
 /*
  * routeReducer

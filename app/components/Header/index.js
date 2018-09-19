@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
-import { logoutUser } from '../../containers/App/actions';
+import { setLogoutCurrentUser } from '../../containers/App/actions';
 import {
   Bar,
   PictureContainer,
@@ -15,17 +15,23 @@ import {
   Popularity,
   Profile,
 } from './styles';
+import login from 'horizon/login';
+import {
+  selectCurrentUser,
+  selectLoginStatus,
+} from '../../containers/App/selectors';
 
 class Header extends React.PureComponent {
   static propTypes = {
-    userObject: PropTypes.object,
+    currentUser: PropTypes.object,
     login: PropTypes.any,
-    logoutUser: PropTypes.func,
+    setLogoutCurrentUser: PropTypes.func,
   };
 
   removeSessionId = () => {
-    this.props.logoutUser(localStorage.getItem('user-session'));
-    localStorage.removeItem('user-session');
+    login.signOut(() => {
+      this.props.setLogoutCurrentUser();
+    });
   };
 
   render() {
@@ -34,7 +40,7 @@ class Header extends React.PureComponent {
         <Profile>
           <PictureContainer>
             <Link className="user" href to="/" />
-            <ProfilePicture source={this.props.userObject.imageUrl} />
+            <ProfilePicture source={this.props.currentUser.photoURL} />
           </PictureContainer>
           {!this.props.login ? (
             <Link href to="/login">
@@ -53,17 +59,14 @@ class Header extends React.PureComponent {
         </Profile>
         <Stats>
           <Rating>
-            <div>{this.props.userObject.rating || '-'}</div>
+            <div>{this.props.currentUser.rating || '-'}</div>
           </Rating>
           <Rank>
-            <div>{this.props.userObject.rank || '-'}</div>
+            <div>{this.props.currentUser.rank || '-'}</div>
           </Rank>
           <Popularity>
             <Link className="messages" href to="/messages" />
-            <div>
-              {Object.keys(this.props.userObject.comments.recieved).length ||
-                '-'}
-            </div>
+            <div>{this.props.currentUser.comments.length || '-'}</div>
           </Popularity>
         </Stats>
       </Bar>
@@ -71,10 +74,13 @@ class Header extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser(),
+  login: selectLoginStatus(),
+});
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ logoutUser }, dispatch);
+  return bindActionCreators({ setLogoutCurrentUser }, dispatch);
 }
 
 export default connect(

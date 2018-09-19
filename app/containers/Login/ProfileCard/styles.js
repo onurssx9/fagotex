@@ -72,3 +72,5 @@ export const ProfilePicture = styled.div`
   background-size: contain;
   border-radius: 100%;
 `;
+
+export const LoginButton = styled.button``;

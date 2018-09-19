@@ -1,4 +1,6 @@
 import firebase from 'firebase';
+import '@firebase/firestore';
+import ReduxSagaFirebase from 'redux-saga-firebase';
 
 const config = {
   apiKey: 'AIzaSyBcR-rpqnkH0-rHntMJmk1-PiGXjQknfoU',
@@ -9,11 +11,16 @@ const config = {
   messagingSenderId: '99552855073',
 };
 firebase.initializeApp(config);
+const db = firebase.firestore();
 
-// const db = firebase.firestore();
+db.settings({
+  timestampsInSnapshots: true,
+});
 
-// db.settings({
-//   timestampsInSnapshots: true,
-// });
+const rsf = new ReduxSagaFirebase(firebase);
 
-export default firebase;
+export default {
+  firebase,
+  db,
+  rsf,
+};

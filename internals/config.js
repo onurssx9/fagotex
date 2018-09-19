@@ -29,6 +29,7 @@ const ReactBoilerplate = {
         'minimist',
         'sanitize.css',
       ],
+      'import/no-namespace': 'off',
 
       /**
        * Specify any additional dependencies here. We include core-js and lodash

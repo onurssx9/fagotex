@@ -11,8 +11,8 @@ export default function App() {
     <React.Fragment>
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route exact path="/Login" component={Login} />
-        <Route exact path="/Messages" component={Messages} />
+        <Route path="/Login" component={Login} />
+        <Route path="/Messages" component={Messages} />
         <Route component={NotFoundPage} />
       </Switch>
     </React.Fragment>

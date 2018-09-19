@@ -1,25 +1,21 @@
 import { put, call, take, fork } from 'redux-saga/effects';
-// import { eventChannel, buffers } from 'redux-saga';
-// import firebase from '../../service/firebase/firebase';
-import { updateUser } from './actions';
+import api from 'horizon/auth';
+import { forkUsers } from './actions';
 
-function createEventChannel() {
-  console.log(312);
-}
-
-function* usersListener(data) {
+function* usersChannel(data) {
   try {
+    yield put(forkUsers(data));
   } catch (error) {
     console.log(error);
   }
 }
 
 function* userListenerWatcher() {
-  // const listener = createEventChannel();
-  // while (true) {
-  //   const data = yield take(listener);
-  //   yield call(usersListener, data);
-  // }
+  const userChannel = api.rsf.firestore.channel('users');
+  while (true) {
+    const data = yield take(userChannel);
+    yield call(usersChannel, data.docs.map(x => x.data()));
+  }
 }
 
 export default function* rootSaga() {
