@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, withRouter } from 'react-router-dom';
 import login from 'horizon/login';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   setLogoutCurrentUser,
   getCurrentUser,
@@ -19,6 +20,7 @@ import {
   Popularity,
   Profile,
   Logout,
+  Navigation,
 } from './styles';
 import {
   selectCurrentUser,
@@ -34,6 +36,8 @@ class Header extends React.PureComponent {
         if (user) {
           const { email, displayName, photoURL } = user;
           this.props.getCurrentUser({ email, displayName, photoURL });
+        } else {
+          this.props.history.push('/login');
         }
       });
     }
@@ -55,6 +59,7 @@ class Header extends React.PureComponent {
   };
 
   render() {
+    const path = window.location.pathname;
     return (
       <Bar>
         <Profile>
@@ -62,12 +67,20 @@ class Header extends React.PureComponent {
             <Link className="user" href to="/" />
             <ProfilePicture source={this.props.currentUser.photoURL} />
           </PictureContainer>
-          {!this.props.loginStatus && (
-            <Logout onClick={this.removeSessionId} className="logout">
-              Logout
-            </Logout>
-          )}
         </Profile>
+        <Navigation>
+          <button active={(path === '/').toString()}>
+            <Link href to="/" />
+            <FontAwesomeIcon icon="home" />
+          </button>
+          <button active={(path === '/messages').toString()}>
+            <Link href to="/messages" />
+            <FontAwesomeIcon icon="comments" />
+          </button>
+          <Logout onClick={this.removeSessionId} className="logout">
+            <FontAwesomeIcon icon="sign-out-alt" />
+          </Logout>
+        </Navigation>
         <Stats>
           <Rating>
             <div>{this.props.currentUser.rating || 1}</div>
@@ -76,7 +89,9 @@ class Header extends React.PureComponent {
             <div>{this.props.currentUser.rank || '-'}</div>
           </Rank>
           <Popularity>
-            <Link className="messages" href to="/messages" />
+            <div>
+              <FontAwesomeIcon icon="comments" />
+            </div>
             <div>{this.props.currentUser.comments.length || '-'}</div>
           </Popularity>
         </Stats>

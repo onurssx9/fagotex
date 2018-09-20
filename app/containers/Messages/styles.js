@@ -39,6 +39,7 @@ export const Delete = styled.button`
   margin: 10px;
   outline: none;
   cursor: pointer;
+  font-size: 10px;
 `;
 
 export const Comments = styled.div`

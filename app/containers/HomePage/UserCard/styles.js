@@ -76,12 +76,9 @@ export const Stat = styled.div`
   }
 
   &[type='popularity'] {
-    &:before {
-      content: '💬';
-      display: flex;
-      height: 100%;
-      align-items: center;
-      justify-content: center;
+    [data-icon='fire'] {
+      margin: 5px;
+      color: ${Attributes.red};
     }
 
     div {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Card,
   Block,
@@ -55,7 +56,10 @@ class UserCard extends React.PureComponent {
           <Block flex="1" className="row stats">
             <Stat type="rating">{this.props.user.rating || '-'}</Stat>
             <Stat type="rank">{this.props.user.rank || '-'}</Stat>
-            <Stat type="popularity">{this.calculatePopularity() || '-'}</Stat>
+            <Stat type="popularity">
+              <FontAwesomeIcon icon="fire" />
+              {this.calculatePopularity() || '-'}
+            </Stat>
           </Block>
         </Block>
         <Block flex="3" className="column">

@@ -14,30 +14,13 @@ export const Bar = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
+  }
 
-    a {
-      background: transparent;
-      width: 100%;
-      height: 100%;
-      position: absolute;
+  @media screen and (max-height: 330px) {
+    > div:first-child {
+      display: none;
     }
   }
-`;
-
-export const Logout = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: white;
-  width: 100%;
-  height: 30px;
-  text-decoration: none;
-  text-align: center;
-  align-self: flex-start;
-  z-index: 999;
-  background: ${Attributes.red};
-  border-radius: 0px 0px 10px 10px;
 `;
 
 export const Profile = styled.div`
@@ -68,13 +51,6 @@ export const PictureContainer = styled.div`
   background: ${Attributes.primaryDark};
   overflow: hidden;
   cursor: pointer;
-
-  &:hover {
-    ${ProfilePicture} {
-      transform: scale(1.7);
-      border-radius: 0%;
-    }
-  }
 `;
 
 export const Rating = styled.div`
@@ -88,6 +64,7 @@ export const Rating = styled.div`
     width: 100%;
     align-items: center;
     justify-content: center;
+    flex: 1;
   }
 
   div {
@@ -95,6 +72,7 @@ export const Rating = styled.div`
     justify-content: center;
     color: ${Attributes.grey};
     font-size: 20px;
+    flex: 1;
   }
 `;
 
@@ -111,6 +89,7 @@ export const Rank = styled.div`
     justify-content: center;
     font-size: 25px;
     color: ${Attributes.yellow};
+    flex: 1;
   }
 
   div {
@@ -118,6 +97,7 @@ export const Rank = styled.div`
     justify-content: center;
     color: ${Attributes.grey};
     font-size: 20px;
+    flex: 1;
   }
 `;
 
@@ -127,11 +107,11 @@ export const Popularity = styled.div`
   position: relative;
 
   &:before {
-    content: '💬';
     display: flex;
     width: 100%;
     align-items: center;
     justify-content: center;
+    flex: 1;
   }
 
   div {
@@ -139,12 +119,14 @@ export const Popularity = styled.div`
     justify-content: center;
     color: ${Attributes.grey};
     font-size: 20px;
+    flex: 1;
   }
 `;
 
 export const Stats = styled.div`
   width: 100%;
   justify-content: flex-start;
+  min-height: fit-content;
 
   a {
     background: transparent;
@@ -154,14 +136,73 @@ export const Stats = styled.div`
 
   > div {
     width: 100%;
-    height: 80px;
     border-bottom: ${Attributes.seperator};
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 5px;
     background: ${Attributes.primaryDark};
+    flex-direction: row;
+    height: 43px;
 
     &:first-child {
       border-top: ${Attributes.seperator};
     }
   }
+`;
+
+export const Navigation = styled.div`
+  flex: 1;
+  width: 80px;
+  justify-content: flex-start;
+  color: white;
+  min-height: fit-content;
+
+  button {
+    position: relative;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    color: ${Attributes.grey};
+    font-size: 20px;
+    padding: 10px;
+    background: ${Attributes.primaryDark};
+    border-bottom: ${Attributes.seperator};
+
+    &[active='true'] {
+      background: ${Attributes.primaryLight};
+      color: ${Attributes.yellow};
+    }
+
+    &:first-child {
+      border-top: ${Attributes.seperator};
+    }
+
+    &:last-child {
+      border-bottom: none;
+      background: ${Attributes.red};
+    }
+
+    a {
+      background: transparent;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
+`;
+
+export const Logout = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  width: 100%;
+  height: 30px;
+  text-decoration: none;
+  text-align: center;
+  align-self: flex-start;
+  z-index: 999;
+  background: ${Attributes.red};
+  border-radius: 0px 0px 10px 10px;
 `;

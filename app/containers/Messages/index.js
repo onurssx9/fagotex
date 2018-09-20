@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import login from 'horizon/login';
 import user from 'horizon/user';
 
@@ -63,7 +64,7 @@ class Messages extends React.PureComponent {
                     id={key}
                     onClick={event => this.deleteCommentEvent(event)}
                   >
-                    -
+                    <FontAwesomeIcon icon="trash-alt" />
                   </Delete>
                   <Block>{text}</Block>
                 </Comment>
