@@ -16,7 +16,7 @@ import {
   ProfilePicture,
   Stats,
   Rating,
-  Rank,
+  Comments,
   Popularity,
   Profile,
   Logout,
@@ -83,17 +83,23 @@ class Header extends React.PureComponent {
         </Navigation>
         <Stats>
           <Rating>
+            <div>
+              <FontAwesomeIcon icon="star" />
+            </div>
             <div>{this.props.currentUser.rating || 1}</div>
           </Rating>
-          <Rank>
-            <div>{this.props.currentUser.rank || '-'}</div>
-          </Rank>
           <Popularity>
+            <div>
+              <FontAwesomeIcon icon="fire" />
+            </div>
+            <div>{this.props.currentUser.rank || '-'}</div>
+          </Popularity>
+          <Comments>
             <div>
               <FontAwesomeIcon icon="comments" />
             </div>
             <div>{this.props.currentUser.comments.length || '-'}</div>
-          </Popularity>
+          </Comments>
         </Stats>
       </Bar>
     );

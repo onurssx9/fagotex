@@ -54,11 +54,17 @@ class UserCard extends React.PureComponent {
             <UserTitle>{this.props.user.displayName || 'John Doe'}</UserTitle>
           </Block>
           <Block flex="1" className="row stats">
-            <Stat type="rating">{this.props.user.rating || '-'}</Stat>
-            <Stat type="rank">{this.props.user.rank || '-'}</Stat>
+            <Stat type="rating">
+              <FontAwesomeIcon icon="star" />
+              {this.props.user.rating || 1}
+            </Stat>
             <Stat type="popularity">
               <FontAwesomeIcon icon="fire" />
-              {this.calculatePopularity() || '-'}
+              {this.calculatePopularity() || 0}
+            </Stat>
+            <Stat type="rank">
+              <FontAwesomeIcon icon="comments" />
+              {this.props.user.comments.length || 0}
             </Stat>
           </Block>
         </Block>

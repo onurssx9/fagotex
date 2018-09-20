@@ -58,41 +58,11 @@ export const Rating = styled.div`
   align-items: flex-start;
   position: relative;
 
-  &:before {
-    content: '⭐';
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-  }
-
   div {
-    align-items: center;
-    justify-content: center;
-    color: ${Attributes.grey};
-    font-size: 20px;
-    flex: 1;
-  }
-`;
+    &:first-child {
+      color: ${Attributes.yellow};
+    }
 
-export const Rank = styled.div`
-  justify-content: space-evenly;
-  align-items: flex-start;
-  position: relative;
-
-  &:before {
-    content: '#';
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    font-size: 25px;
-    color: ${Attributes.yellow};
-    flex: 1;
-  }
-
-  div {
     align-items: center;
     justify-content: center;
     color: ${Attributes.grey};
@@ -106,15 +76,29 @@ export const Popularity = styled.div`
   align-items: flex-start;
   position: relative;
 
-  &:before {
-    display: flex;
-    width: 100%;
+  div {
+    &:first-child {
+      color: ${Attributes.red};
+    }
+
     align-items: center;
     justify-content: center;
+    color: ${Attributes.grey};
+    font-size: 20px;
     flex: 1;
   }
+`;
+
+export const Comments = styled.div`
+  justify-content: space-evenly;
+  align-items: flex-start;
+  position: relative;
 
   div {
+    &:first-child {
+      color: ${Attributes.blue};
+    }
+
     align-items: center;
     justify-content: center;
     color: ${Attributes.grey};

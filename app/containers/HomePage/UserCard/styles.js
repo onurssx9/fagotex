@@ -42,12 +42,9 @@ export const Stat = styled.div`
   justify-content: center;
 
   &[type='rating'] {
-    &:before {
-      content: '⭐';
-      display: flex;
-      height: 100%;
-      align-items: center;
-      justify-content: center;
+    [data-icon='star'] {
+      margin: 5px;
+      color: ${Attributes.yellow};
     }
 
     div {
@@ -59,12 +56,9 @@ export const Stat = styled.div`
   }
 
   &[type='rank'] {
-    &:before {
-      content: '#';
-      display: flex;
-      height: 100%;
-      align-items: center;
-      justify-content: center;
+    [data-icon='comments'] {
+      margin: 5px;
+      color: ${Attributes.blue};
     }
 
     div {
