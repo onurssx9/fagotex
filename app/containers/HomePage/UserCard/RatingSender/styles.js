@@ -13,6 +13,7 @@ export const RatingBox = styled.div`
   max-height: 0px;
   overflow: hidden;
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
 `;
 
 export const Rate = styled.button`
