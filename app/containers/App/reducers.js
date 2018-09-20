@@ -11,9 +11,7 @@ const userObject = fromJS({
   photoURL: '',
   email: '',
   comments: [],
-  rate: 0,
-  rating: 0,
-  rank: 0,
+  rating: [],
 });
 
 // The initial state of the App

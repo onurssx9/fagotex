@@ -15,10 +15,31 @@ const get = async requestData => {
     .doc(requestData.email || requestData)
     .get()
     .then(x => x.data());
+
   if (!response) {
     return create(requestData);
   }
+
   return response;
+};
+
+const rate = async requestData => {
+  const { rating, popularity } = requestData;
+
+  if (rating.length > 10) {
+    rating.shift();
+  }
+
+  await api.db
+    .collection('users')
+    .doc(requestData.email)
+    .set(
+      {
+        rating,
+        popularity,
+      },
+      { merge: true },
+    );
 };
 
 const comment = async requestData => {
@@ -29,6 +50,7 @@ const comment = async requestData => {
       comments: api.firebase.firestore.FieldValue.arrayUnion(
         requestData.comment,
       ),
+      popularity: requestData.popularity,
     });
 };
 
@@ -53,4 +75,5 @@ export default {
   get,
   comment,
   deleteComment,
+  rate,
 };

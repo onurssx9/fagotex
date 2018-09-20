@@ -38,10 +38,12 @@ export const UserTitle = Title;
 
 export const Stat = styled.div`
   flex: 1;
+  position: relative;
   align-items: center;
   justify-content: center;
 
   &[type='rating'] {
+    cursor: pointer;
     [data-icon='star'] {
       margin: 5px;
       color: ${Attributes.yellow};
@@ -52,6 +54,12 @@ export const Stat = styled.div`
       justify-content: center;
       color: ${Attributes.grey};
       font-size: 20px;
+    }
+
+    &:hover {
+      > div {
+        max-height: 500px;
+      }
     }
   }
 

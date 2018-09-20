@@ -61,12 +61,13 @@ export const Rating = styled.div`
   div {
     &:first-child {
       color: ${Attributes.yellow};
+      font-size: 20px;
     }
 
     align-items: center;
     justify-content: center;
     color: ${Attributes.grey};
-    font-size: 20px;
+    font-size: 15px;
     flex: 1;
   }
 `;
@@ -79,12 +80,13 @@ export const Popularity = styled.div`
   div {
     &:first-child {
       color: ${Attributes.red};
+      font-size: 20px;
     }
 
     align-items: center;
     justify-content: center;
     color: ${Attributes.grey};
-    font-size: 20px;
+    font-size: 15px;
     flex: 1;
   }
 `;
@@ -97,12 +99,13 @@ export const Comments = styled.div`
   div {
     &:first-child {
       color: ${Attributes.blue};
+      font-size: 20px;
     }
 
     align-items: center;
     justify-content: center;
     color: ${Attributes.grey};
-    font-size: 20px;
+    font-size: 15px;
     flex: 1;
   }
 `;

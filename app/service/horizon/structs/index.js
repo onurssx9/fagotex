@@ -4,8 +4,7 @@ export default {
     photoURL: data.photoURL,
     email: data.email,
     comments: data.comments || [],
-    rating: data.rating || 1,
-    rate: data.rate || 0,
+    rating: data.rating || [],
     popularity: data.popularity || 0,
   }),
 };

@@ -58,6 +58,14 @@ class Header extends React.PureComponent {
     });
   };
 
+  calculateRating = rating => {
+    const sum = rating.reduce((a, b) => a + b, 0);
+    if (sum > 0) {
+      return sum / rating.length;
+    }
+    return 0;
+  };
+
   render() {
     const path = window.location.pathname;
     return (
@@ -86,19 +94,27 @@ class Header extends React.PureComponent {
             <div>
               <FontAwesomeIcon icon="star" />
             </div>
-            <div>{this.props.currentUser.rating || 1}</div>
+            <div>
+              {this.calculateRating(this.props.currentUser.rating).toFixed(2) ||
+                '-'}
+            </div>
           </Rating>
           <Popularity>
             <div>
               <FontAwesomeIcon icon="fire" />
             </div>
-            <div>{this.props.currentUser.rank || '-'}</div>
+            <div>
+              {Math.round(
+                this.calculateRating(this.props.currentUser.rating) *
+                  this.props.currentUser.comments.length,
+              ) || '-'}
+            </div>
           </Popularity>
           <Comments>
             <div>
               <FontAwesomeIcon icon="comments" />
             </div>
-            <div>{this.props.currentUser.comments.length || '-'}</div>
+            <div>{this.props.currentUser.comments.length || 0}</div>
           </Comments>
         </Stats>
       </Bar>

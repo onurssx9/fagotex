@@ -2,12 +2,7 @@ import { call, take, put } from 'redux-saga/effects';
 import user from 'horizon/user';
 import users from 'horizon/users';
 
-import {
-  SET_CURRENT_USER,
-  GET_CURRENT_USER,
-  GET_ALL_USERS,
-  UPDATE_USER_COMMENTS,
-} from './constants';
+import { SET_CURRENT_USER, GET_CURRENT_USER, GET_ALL_USERS } from './constants';
 import { setCurrentUser, setAllUsers } from './actions';
 import channels from './listeners';
 
@@ -58,27 +53,11 @@ function* getAllUsersWatcher() {
   }
 }
 
-function* updateUserComments(userObject) {
-  try {
-    yield call(user.updateUserComments, userObject);
-  } catch (error) {
-    throw new Error(error);
-  }
-}
-
-function* updateUserCommentsWatcher() {
-  while (true) {
-    yield take(UPDATE_USER_COMMENTS);
-    yield call(updateUserComments);
-  }
-}
-
 function* rootSaga() {
   yield [
     createUserRequestWatcher,
     getUserWatcher,
     getAllUsersWatcher,
-    updateUserCommentsWatcher,
     channels,
   ].map(saga => call(saga));
 }

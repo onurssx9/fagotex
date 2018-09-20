@@ -6,11 +6,12 @@ import { bindActionCreators } from 'redux';
 import user from 'horizon/user';
 import login from 'horizon/login';
 import { CommentInput, SendComment } from './styles';
-import { updateUserComments } from '../../../App/actions';
 
 class CommentSender extends React.PureComponent {
   static propTypes = {
     userId: PropTypes.string,
+    rating: PropTypes.number,
+    comments: PropTypes.number,
   };
 
   state = {
@@ -25,6 +26,7 @@ class CommentSender extends React.PureComponent {
     this.setState({ comment: '' });
     user.comment({
       email: this.props.userId,
+      popularity: this.props.rating * (this.props.comments + 1),
       comment: {
         sender: login.auth.currentUser.email,
         text: this.state.comment,
@@ -63,7 +65,7 @@ class CommentSender extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({});
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ updateUserComments }, dispatch);
+  return bindActionCreators({}, dispatch);
 }
 
 export default connect(

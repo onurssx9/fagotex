@@ -6,6 +6,7 @@ import {
   SET_ALL_USERS,
   FORK_USERS,
   UPDATE_USER_COMMENTS,
+  UPDATE_USER_RATING,
 } from './constants';
 
 export const setCurrentUser = user => ({
@@ -29,11 +30,6 @@ export const forkUsers = users => ({
 
 export const setAllUsers = users => ({
   type: SET_ALL_USERS,
-  users,
-});
-
-export const updateUserComments = users => ({
-  type: UPDATE_USER_COMMENTS,
   users,
 });
 

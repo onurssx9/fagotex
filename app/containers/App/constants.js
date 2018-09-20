@@ -6,4 +6,3 @@ export const GET_ALL_USERS = 'App/GET_ALL_USERS';
 export const SET_ALL_USERS = 'App/SET_ALL_USERS';
 export const FORK_USERS = 'App/FORK_USERS';
 export const FORK_USER = 'App/FORK_USER';
-export const UPDATE_USER_COMMENTS = 'App/UPDATE_USER_COMMENTS';

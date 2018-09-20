@@ -14,6 +14,7 @@ import {
   Comment,
 } from './styles';
 import CommentSender from './CommentSender';
+import RatingSender from './RatingSender';
 
 class UserCard extends React.PureComponent {
   state = {
@@ -40,8 +41,13 @@ class UserCard extends React.PureComponent {
     this.setState({ commentCount: updatedCount });
   };
 
-  calculatePopularity = () =>
-    this.props.user.comments.length * this.props.user.rating;
+  calculateRating = rating => {
+    const sum = rating.reduce((a, b) => a + b, 0);
+    if (sum > 0) {
+      return sum / rating.length;
+    }
+    return 0;
+  };
 
   render() {
     return (
@@ -55,12 +61,23 @@ class UserCard extends React.PureComponent {
           </Block>
           <Block flex="1" className="row stats">
             <Stat type="rating">
+              <RatingSender
+                userId={this.props.user.email}
+                ratings={this.props.user.rating}
+                comments={this.props.user.comments.length}
+                rating={parseFloat(
+                  this.calculateRating(this.props.user.rating),
+                )}
+              />
               <FontAwesomeIcon icon="star" />
-              {this.props.user.rating || 1}
+              {this.calculateRating(this.props.user.rating).toFixed(2) || '-'}
             </Stat>
             <Stat type="popularity">
               <FontAwesomeIcon icon="fire" />
-              {this.calculatePopularity() || 0}
+              {Math.round(
+                this.calculateRating(this.props.user.rating) *
+                  this.props.user.comments.length,
+              ) || '-'}
             </Stat>
             <Stat type="rank">
               <FontAwesomeIcon icon="comments" />
@@ -82,7 +99,11 @@ class UserCard extends React.PureComponent {
         </Block>
         <Block flex="1" className="row">
           <Block flex="3" className="row">
-            <CommentSender userId={this.props.user.email} />
+            <CommentSender
+              userId={this.props.user.email}
+              rating={parseFloat(this.calculateRating(this.props.user.rating))}
+              comments={this.props.user.comments.length}
+            />
           </Block>
         </Block>
       </Card>
