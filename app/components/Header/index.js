@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Link } from 'react-router-dom';
-import { setLogoutCurrentUser } from '../../containers/App/actions';
+import { Link, withRouter } from 'react-router-dom';
+import login from 'horizon/login';
+import {
+  setLogoutCurrentUser,
+  getCurrentUser,
+} from '../../containers/App/actions';
 import {
   Bar,
   PictureContainer,
@@ -14,23 +18,39 @@ import {
   Rank,
   Popularity,
   Profile,
+  Logout,
 } from './styles';
-import login from 'horizon/login';
 import {
   selectCurrentUser,
   selectLoginStatus,
 } from '../../containers/App/selectors';
 
 class Header extends React.PureComponent {
+  componentDidMount() {
+    if (!this.props.loginStatus && login.auth.currentUser) {
+      this.props.getCurrentUser(login.auth.currentUser.email);
+    } else {
+      login.isSignIn(user => {
+        if (user) {
+          const { email, displayName, photoURL } = user;
+          this.props.getCurrentUser({ email, displayName, photoURL });
+        }
+      });
+    }
+  }
+
   static propTypes = {
     currentUser: PropTypes.object,
-    login: PropTypes.any,
     setLogoutCurrentUser: PropTypes.func,
+    loginStatus: PropTypes.bool,
+    getCurrentUser: PropTypes.func,
+    history: PropTypes.any,
   };
 
   removeSessionId = () => {
     login.signOut(() => {
       this.props.setLogoutCurrentUser();
+      this.props.history.push('/login');
     });
   };
 
@@ -42,24 +62,15 @@ class Header extends React.PureComponent {
             <Link className="user" href to="/" />
             <ProfilePicture source={this.props.currentUser.photoURL} />
           </PictureContainer>
-          {!this.props.login ? (
-            <Link href to="/login">
-              Login
-            </Link>
-          ) : (
-            <Link
-              onClick={this.removeSessionId}
-              className="logout"
-              href
-              to="/login"
-            >
+          {!this.props.loginStatus && (
+            <Logout onClick={this.removeSessionId} className="logout">
               Logout
-            </Link>
+            </Logout>
           )}
         </Profile>
         <Stats>
           <Rating>
-            <div>{this.props.currentUser.rating || '-'}</div>
+            <div>{this.props.currentUser.rating || 1}</div>
           </Rating>
           <Rank>
             <div>{this.props.currentUser.rank || '-'}</div>
@@ -80,10 +91,10 @@ const mapStateToProps = createStructuredSelector({
 });
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setLogoutCurrentUser }, dispatch);
+  return bindActionCreators({ setLogoutCurrentUser, getCurrentUser }, dispatch);
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Header);
+)(withRouter(Header));

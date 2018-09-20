@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import user from 'horizon/user';
+import login from 'horizon/login';
 import { CommentInput, SendComment } from './styles';
-import { addComment } from '../../../App/actions';
+import { updateUserComments } from '../../../App/actions';
 
 class CommentSender extends React.PureComponent {
   static propTypes = {
     userId: PropTypes.string,
-    addComment: PropTypes.func,
   };
 
   state = {
@@ -22,16 +23,20 @@ class CommentSender extends React.PureComponent {
 
   sendComment = () => {
     this.setState({ comment: '' });
-    this.props.addComment({
-      text: this.state.comment,
-      userId: this.props.userId,
+    user.comment({
+      email: this.props.userId,
+      comment: {
+        sender: login.auth.currentUser.email,
+        text: this.state.comment,
+      },
     });
   };
 
   handleKeyPress = event => {
     if (
       event.charCode === 13 &&
-      (this.state.comment.length !== 0 && this.state.comment.length < 140)
+      (this.state.comment.replace(/\s/g, '').length !== 0 &&
+        this.state.comment.length < 140)
     ) {
       this.sendComment();
     }
@@ -47,7 +52,7 @@ class CommentSender extends React.PureComponent {
           onKeyPress={event => this.handleKeyPress(event)}
         />
         <SendComment
-          length={this.state.comment.length}
+          length={this.state.comment.replace(/\s/g, '').length}
           onClick={this.sendComment}
         />
       </React.Fragment>
@@ -58,7 +63,7 @@ class CommentSender extends React.PureComponent {
 const mapStateToProps = createStructuredSelector({});
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ addComment }, dispatch);
+  return bindActionCreators({ updateUserComments }, dispatch);
 }
 
 export default connect(

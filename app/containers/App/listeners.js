@@ -6,7 +6,7 @@ function* usersChannel(data) {
   try {
     yield put(forkUsers(data));
   } catch (error) {
-    console.log(error);
+    throw new Error(error);
   }
 }
 

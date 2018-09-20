@@ -14,28 +14,30 @@ export const Bar = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
-  }
 
-  a {
-    color: white;
-    width: 100%;
-    height: 50px;
-    background: ${Attributes.green};
-    text-decoration: none;
-    text-align: center;
-    align-self: flex-start;
-    z-index: 999;
-
-    &.logout {
-      background: ${Attributes.red};
-    }
-
-    &.user {
+    a {
       background: transparent;
+      width: 100%;
       height: 100%;
       position: absolute;
     }
   }
+`;
+
+export const Logout = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  width: 100%;
+  height: 30px;
+  text-decoration: none;
+  text-align: center;
+  align-self: flex-start;
+  z-index: 999;
+  background: ${Attributes.red};
+  border-radius: 0px 0px 10px 10px;
 `;
 
 export const Profile = styled.div`
@@ -44,7 +46,7 @@ export const Profile = styled.div`
   justify-content: space-between;
   flex-direction: column;
   width: 80px;
-  height: 80px;
+  height: fit-content;
   background: ${Attributes.primaryLight};
   position: relative;
 `;

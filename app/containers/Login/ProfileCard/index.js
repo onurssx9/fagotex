@@ -9,24 +9,30 @@ import { bindActionCreators } from 'redux';
 import { Login, Form, Title, Motto, Wrapper, ProfilePicture } from './styles';
 import BlankPhoto from './blankProfile.png';
 
-import { setCurrentUser } from '../../App/actions';
+import { getCurrentUser } from '../../App/actions';
+import { selectLoginStatus } from '../../App/selectors';
 
 class ProfileCard extends React.PureComponent {
   static propTypes = {
-    setCurrentUser: PropTypes.func,
+    getCurrentUser: PropTypes.func,
+    loginStatus: PropTypes.bool,
   };
 
   componentDidMount() {
-    login.isSignIn(user => {
-      if (user) {
-        const { displayName, email, photoURL } = user;
-        this.props.setCurrentUser({
-          displayName,
-          email,
-          photoURL,
-        });
-      }
-    });
+    if (!this.props.loginStatus && login.auth.currentUser) {
+      this.props.getCurrentUser(login.auth.currentUser.email);
+    } else {
+      login.isSignIn(user => {
+        if (user) {
+          const { email, photoURL, displayName } = user;
+          this.props.getCurrentUser({
+            email,
+            photoURL,
+            displayName,
+          });
+        }
+      });
+    }
   }
 
   render() {
@@ -53,12 +59,14 @@ class ProfileCard extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  loginStatus: selectLoginStatus(),
+});
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      setCurrentUser,
+      getCurrentUser,
     },
     dispatch,
   );

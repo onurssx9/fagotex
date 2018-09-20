@@ -37,8 +37,7 @@ function globalReducer(state = initialState, action) {
         x => x.email === state.getIn(['currentUser', 'email']),
       );
       if (currentUser && currentUser !== null) {
-        console.log(3);
-        newState.set('currentUser', fromJS(currentUser));
+        return newState.setIn(['currentUser'], fromJS(currentUser));
       }
       return newState;
     }

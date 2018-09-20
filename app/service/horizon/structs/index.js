@@ -3,8 +3,9 @@ export default {
     displayName: data.displayName,
     photoURL: data.photoURL,
     email: data.email,
-    comments: [],
-    rate: 0,
-    popularity: 0,
+    comments: data.comments || [],
+    rating: data.rating || 1,
+    rate: data.rate || 0,
+    popularity: data.popularity || 0,
   }),
 };

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, bindActionCreators } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import { withRouter } from 'react-router';
+import login from 'horizon/login';
 
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
@@ -14,7 +14,6 @@ import UserCard from './UserCard';
 import { People } from './styles';
 import { selectUserCards, selectLoginStatus } from '../App/selectors';
 import { getCurrentUser, getAllUsers } from '../App/actions';
-import login from 'horizon/login';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Homepage extends React.PureComponent {
@@ -23,23 +22,24 @@ export class Homepage extends React.PureComponent {
   }
 
   static propTypes = {
-    userCards: PropTypes.object,
-    loginStatus: PropTypes.bool,
-    getCurrentUser: PropTypes.func,
+    userCards: PropTypes.array,
     getAllUsers: PropTypes.func,
   };
 
-  componentDidMount() {
-    if (!this.props.loginStatus && login.auth.currentUser) {
-      this.props.getCurrentUser(login.auth.currentUser.email);
-    }
-  }
-
-  getUserCards = () =>
-    this.props.userCards.map(user => {
+  getUserCards = () => {
+    const cards = this.props.userCards.map(user => {
       const key = user.email;
-      return <UserCard key={key} user={user} />;
+      return (
+        <UserCard
+          key={key}
+          user={user}
+          currentUserEmail={(login.auth.currentUser || {}).email || ''}
+        />
+      );
     });
+
+    return cards;
+  };
 
   render() {
     return (
@@ -72,4 +72,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(withRouter(Homepage));
+)(Homepage);

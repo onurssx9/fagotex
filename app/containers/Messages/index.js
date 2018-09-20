@@ -4,6 +4,9 @@ import { withRouter } from 'react-router';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import login from 'horizon/login';
+import user from 'horizon/user';
+
 import {
   RecievedMessages,
   Comments,
@@ -13,39 +16,59 @@ import {
   Block,
 } from './styles';
 import Header from '../../components/Header';
+import { getCurrentUser } from '../../containers/App/actions';
+import { selectCurrentUser, selectLoginStatus } from '../App/selectors';
 
 class Messages extends React.PureComponent {
-  componentWillMount() {}
+  componentDidMount() {
+    if (!this.props.loginStatus && login.auth.currentUser) {
+      this.props.getCurrentUser(login.auth.currentUser.email);
+    } else {
+      login.isSignIn(userInfo => {
+        if (userInfo) {
+          const { email, displayName, photoURL } = userInfo;
+          this.props.getCurrentUser({ email, displayName, photoURL });
+        }
+      });
+    }
+  }
 
-  static propTypes = {};
+  static propTypes = {
+    currentUser: PropTypes.object,
+    loginStatus: PropTypes.bool,
+    getCurrentUser: PropTypes.func,
+  };
 
-  deleteCommentEvent = event => {};
+  deleteCommentEvent = event => {
+    user.deleteComment({
+      comments: this.props.currentUser.comments,
+      email: login.auth.currentUser.email,
+      id: event.target.id,
+    });
+  };
 
   render() {
     return (
       <React.Fragment>
-        <Header userObject={this.props.userObject} login={this.props.login} />
+        <Header />
         <RecievedMessages>
           <Title>Recieved Comments</Title>
           <Comments>
-            {Object.keys(this.props.userObject.comments.recieved).map(
-              (key, index) => {
-                const { text } = Object.values(
-                  this.props.userObject.comments.recieved,
-                )[index];
-                return (
-                  <Comment key={key}>
-                    <Delete
-                      id={key}
-                      onClick={event => this.deleteCommentEvent(event)}
-                    >
-                      -
-                    </Delete>
-                    <Block>{text}</Block>
-                  </Comment>
-                );
-              },
-            )}
+            {this.props.currentUser.comments.map((comment, index) => {
+              const { text } = comment;
+              const key = index;
+              return (
+                <Comment key={key}>
+                  <Delete
+                    id={key}
+                    onClick={event => this.deleteCommentEvent(event)}
+                  >
+                    -
+                  </Delete>
+                  <Block>{text}</Block>
+                </Comment>
+              );
+            })}
           </Comments>
         </RecievedMessages>
       </React.Fragment>
@@ -53,10 +76,13 @@ class Messages extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser(),
+  loginStatus: selectLoginStatus(),
+});
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({}, dispatch);
+  return bindActionCreators({ getCurrentUser }, dispatch);
 }
 
 export default connect(
