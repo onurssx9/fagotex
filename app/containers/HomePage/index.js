@@ -3,69 +3,61 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, bindActionCreators } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import { withRouter } from 'react-router';
+import login from 'horizon/login';
 
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
-import { getUserObject, getLoginStatus, getUserCards } from '../App/selectors';
-import { changeLoginStatus, getUsers, setUserObject } from '../App/actions';
 import reducer from './reducers';
 import saga from './sagas';
-import Header from './Header';
+import Header from '../../components/Header';
 import UserCard from './UserCard';
 import { People } from './styles';
+import { selectUserCards, selectLoginStatus } from '../App/selectors';
+import { getCurrentUser, getAllUsers } from '../App/actions';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Homepage extends React.PureComponent {
   componentWillMount() {
-    if (!this.props.login) {
-      this.props.history.push('/login');
-    }
-    this.props.setUserObject({});
-    this.props.getUsers();
+    this.props.getAllUsers();
   }
 
   static propTypes = {
-    setUserObject: PropTypes.func,
-    userObject: PropTypes.object,
-    getUsers: PropTypes.func,
-    login: PropTypes.any,
-    userCards: PropTypes.object,
-    history: PropTypes.any,
+    userCards: PropTypes.array,
+    getAllUsers: PropTypes.func,
+  };
+
+  getUserCards = () => {
+    const cards = this.props.userCards.map(user => {
+      const key = user.email;
+      return (
+        <UserCard
+          key={key}
+          user={user}
+          currentUserEmail={(login.auth.currentUser || {}).email || ''}
+        />
+      );
+    });
+
+    return cards;
   };
 
   render() {
     return (
       <React.Fragment>
-        <Header userObject={this.props.userObject} login={this.props.login} />
-        <People>
-          {Object.values(this.props.userCards).map((user, index) => {
-            const key = index;
-            return (
-              <UserCard
-                key={key}
-                user={user}
-                gid={this.props.userObject.googleId}
-              />
-            );
-          })}
-        </People>
+        <Header />
+        <People>{!!this.props.userCards.length && this.getUserCards()}</People>
       </React.Fragment>
     );
   }
 }
 
 export function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    { changeLoginStatus, getUsers, setUserObject },
-    dispatch,
-  );
+  return bindActionCreators({ getCurrentUser, getAllUsers }, dispatch);
 }
 
 const mapStateToProps = createStructuredSelector({
-  userObject: getUserObject(),
-  login: getLoginStatus(),
-  userCards: getUserCards(),
+  userCards: selectUserCards(),
+  loginStatus: selectLoginStatus(),
 });
 
 const withConnect = connect(
@@ -80,4 +72,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(withRouter(Homepage));
+)(Homepage);

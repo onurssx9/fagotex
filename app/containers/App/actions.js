@@ -1,73 +1,38 @@
 import {
-  LOGIN,
-  USER_OBJECT,
-  GET_USER_BY_ID,
-  UPDATE_USER,
-  SET_USERS,
-  GET_USERS,
-  ADD_COMMENT,
-  SET_LOGIN_DATA,
-  REMOVE_LOGIN_DATA,
+  SET_CURRENT_USER,
+  SET_LOGOUT_CURRENT_USER,
+  GET_CURRENT_USER,
+  GET_ALL_USERS,
+  SET_ALL_USERS,
+  FORK_USERS,
+  UPDATE_USER_COMMENTS,
+  UPDATE_USER_RATING,
 } from './constants';
 
-export function changeLoginStatus(status) {
-  return {
-    type: LOGIN,
-    status,
-  };
-}
+export const setCurrentUser = user => ({
+  type: SET_CURRENT_USER,
+  user,
+});
 
-export function setUserObject(data) {
-  return {
-    type: USER_OBJECT,
-    data,
-  };
-}
+export const getCurrentUser = email => ({
+  type: GET_CURRENT_USER,
+  email,
+});
 
-export function setLoginData(data) {
-  return {
-    type: SET_LOGIN_DATA,
-    data,
-  };
-}
+export const getAllUsers = () => ({
+  type: GET_ALL_USERS,
+});
 
-export function logoutUser(data) {
-  return {
-    type: REMOVE_LOGIN_DATA,
-    data,
-  };
-}
+export const forkUsers = users => ({
+  type: FORK_USERS,
+  users,
+});
 
-export function setUsers(data) {
-  return {
-    type: SET_USERS,
-    data,
-  };
-}
+export const setAllUsers = users => ({
+  type: SET_ALL_USERS,
+  users,
+});
 
-export function getUsers() {
-  return {
-    type: GET_USERS,
-  };
-}
-
-export function addComment(data) {
-  return {
-    type: ADD_COMMENT,
-    data,
-  };
-}
-
-export function updateUser(data) {
-  return {
-    type: UPDATE_USER,
-    data,
-  };
-}
-
-export function getUserById(userId) {
-  return {
-    type: GET_USER_BY_ID,
-    userId,
-  };
-}
+export const setLogoutCurrentUser = () => ({
+  type: SET_LOGOUT_CURRENT_USER,
+});

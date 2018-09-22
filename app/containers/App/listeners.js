@@ -1,36 +1,20 @@
 import { put, call, take, fork } from 'redux-saga/effects';
-import { eventChannel, buffers } from 'redux-saga';
-import firebase from '../../../server/horizon/Firebase';
-import { updateUser } from './actions';
+import api from 'horizon/auth';
+import { forkUsers } from './actions';
 
-const db = firebase.auth().app.database();
-
-function createEventChannel() {
-  const listener = eventChannel(emit => {
-    db.ref('users/').on('child_changed', data => emit(data.val()));
-    return () => db.ref('users').off(listener);
-  }, buffers.expanding(1));
-
-  return listener;
-}
-
-function* usersListener(data) {
+function* usersChannel(data) {
   try {
-    yield put(
-      updateUser({
-        [data.googleId]: data,
-      }),
-    );
+    yield put(forkUsers(data));
   } catch (error) {
-    console.log(error);
+    throw new Error(error);
   }
 }
 
 function* userListenerWatcher() {
-  const listener = createEventChannel();
+  const userChannel = api.rsf.firestore.channel('users');
   while (true) {
-    const data = yield take(listener);
-    yield call(usersListener, data);
+    const data = yield take(userChannel);
+    yield call(usersChannel, data.docs.map(x => x.data()));
   }
 }
 

@@ -1,9 +1,8 @@
 export const LOGIN = 'App/LOGIN';
-export const USER_OBJECT = 'App/USER_OBJECT';
-export const GET_USER_BY_ID = 'App/GET_USER_BY_ID';
-export const UPDATE_USER = 'App/UPDATE_USER';
-export const GET_USERS = 'App/GET_USERS';
-export const SET_USERS = 'App/SET_USERS';
-export const ADD_COMMENT = 'App/ADD_COMMENT';
-export const SET_LOGIN_DATA = 'App/SET_LOGIN_DATA';
-export const REMOVE_LOGIN_DATA = 'App/REMOVE_LOGIN_DATA';
+export const SET_CURRENT_USER = 'App/SET_CURRENT_USER';
+export const GET_CURRENT_USER = 'App/GET_CURRENT_USER';
+export const SET_LOGOUT_CURRENT_USER = 'App/SET_LOGOUT_CURRENT_USER';
+export const GET_ALL_USERS = 'App/GET_ALL_USERS';
+export const SET_ALL_USERS = 'App/SET_ALL_USERS';
+export const FORK_USERS = 'App/FORK_USERS';
+export const FORK_USER = 'App/FORK_USER';

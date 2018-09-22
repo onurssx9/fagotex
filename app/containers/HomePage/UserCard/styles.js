@@ -31,6 +31,7 @@ export const Block = styled.div`
 export const Picture = styled.img`
   width: 60px;
   height: 60px;
+  object-fit: cover;
   border-radius: 100%;
 `;
 
@@ -38,16 +39,15 @@ export const UserTitle = Title;
 
 export const Stat = styled.div`
   flex: 1;
+  position: relative;
   align-items: center;
   justify-content: center;
 
   &[type='rating'] {
-    &:before {
-      content: '⭐';
-      display: flex;
-      height: 100%;
-      align-items: center;
-      justify-content: center;
+    cursor: pointer;
+    [data-icon='star'] {
+      margin: 5px;
+      color: ${Attributes.yellow};
     }
 
     div {
@@ -56,15 +56,18 @@ export const Stat = styled.div`
       color: ${Attributes.grey};
       font-size: 20px;
     }
+
+    &:hover {
+      > div {
+        max-height: 500px;
+      }
+    }
   }
 
   &[type='rank'] {
-    &:before {
-      content: '#';
-      display: flex;
-      height: 100%;
-      align-items: center;
-      justify-content: center;
+    [data-icon='comments'] {
+      margin: 5px;
+      color: ${Attributes.blue};
     }
 
     div {
@@ -76,12 +79,9 @@ export const Stat = styled.div`
   }
 
   &[type='popularity'] {
-    &:before {
-      content: '💬';
-      display: flex;
-      height: 100%;
-      align-items: center;
-      justify-content: center;
+    [data-icon='fire'] {
+      margin: 5px;
+      color: ${Attributes.red};
     }
 
     div {

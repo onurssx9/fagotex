@@ -27,7 +27,7 @@ export const Login = styled.div`
 export const Form = styled.div`
   position: relative;
   width: 300px;
-  height: 300px;
+  height: 330px;
   background: white;
   flex-direction: column;
   border-radius: 10px;
@@ -60,6 +60,14 @@ export const Seperator = styled.div`
 export const Wrapper = styled.div`
   position: relative;
   width: 100%;
+  align-items: center;
+  justify-content: center;
+  max-height: 70px;
+  overflow: hidden;
+
+  .firebaseui-card-footer {
+    display: none;
+  }
 `;
 
 export const ProfilePicture = styled.div`

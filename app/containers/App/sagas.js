@@ -1,157 +1,64 @@
-import { call, take, put, select } from 'redux-saga/effects';
-import {
-  USER_OBJECT,
-  GET_USER_BY_ID,
-  GET_USERS,
-  ADD_COMMENT,
-  REMOVE_LOGIN_DATA,
-} from './constants';
-import { setUserObject, setUsers, setLoginData } from './actions';
-import request from '../../utils/request';
-import { getUserObject } from './selectors';
-import listeners from './listeners';
+import { call, take, put } from 'redux-saga/effects';
+import user from 'horizon/user';
+import users from 'horizon/users';
 
-const API_ENDPOINT = '/api/';
-
-const horizon = {
-  user: {
-    get: param => `user/userId=${param}`,
-    login: () => 'user/login/',
-    update: () => 'user/login/update',
-    addComment: () => 'user/addComment',
-    logout: () => 'user/logout',
-  },
-  users: {
-    get: () => 'users/',
-    create: () => 'users/',
-  },
-};
+import { SET_CURRENT_USER, GET_CURRENT_USER, GET_ALL_USERS } from './constants';
+import { setCurrentUser, setAllUsers } from './actions';
+import channels from './listeners';
 
 function* createUserRequest(userObject) {
   try {
-    const requestOptions = {
-      method: 'POST',
-      body: JSON.stringify(userObject),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    const requestURL = API_ENDPOINT + horizon.user.login();
-    const response = yield call(request, requestURL, requestOptions);
-    if (response.status) {
-      yield put(setLoginData(response.userObject));
-    }
+    yield call(user.create, userObject);
   } catch (error) {
-    console.log(error);
+    throw new Error(error);
   }
 }
 
 function* createUserRequestWatcher() {
   while (true) {
-    yield take(USER_OBJECT);
-    const data = yield select(getUserObject());
-    yield call(createUserRequest, data);
+    const action = yield take(SET_CURRENT_USER);
+    yield call(createUserRequest, action.user);
   }
 }
 
-function* getUserByIDRequest(userId) {
+function* getUser(email) {
   try {
-    const requestURL = API_ENDPOINT + horizon.user.get(userId);
-    const response = yield call(request, requestURL);
-    if (response.status) {
-      yield put(setUserObject, response.userObject);
-    }
+    const currentUser = yield call(user.get, email);
+    yield put(setCurrentUser(currentUser));
   } catch (error) {
-    console.log(error);
+    throw new Error(error);
   }
 }
 
-function* getUserByIDRequestWatcher() {
+function* getUserWatcher() {
   while (true) {
-    const action = yield take(GET_USER_BY_ID);
-    yield call(getUserByIDRequest, action.userId);
+    const action = yield take(GET_CURRENT_USER);
+    yield call(getUser, action.email);
   }
 }
 
-function* getUsers() {
+function* getAllUsers() {
   try {
-    const requestURL = API_ENDPOINT + horizon.users.get();
-    const response = yield call(request, requestURL);
-    if (response.status) {
-      yield put(setUsers(response.users));
-    }
+    const allUsers = yield call(users.get);
+    yield put(setAllUsers(allUsers));
   } catch (error) {
-    console.log(error);
+    throw new Error(error);
   }
 }
 
-function* getUsersWatcher() {
+function* getAllUsersWatcher() {
   while (true) {
-    yield take(GET_USERS);
-    yield call(getUsers);
-  }
-}
-
-function* addCommentRequest(comment) {
-  try {
-    const requestURL = API_ENDPOINT + horizon.user.addComment();
-    const requestOptions = {
-      method: 'POST',
-      body: JSON.stringify(comment),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    yield call(request, requestURL, requestOptions);
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-function* addCommentRequestWatcher() {
-  while (true) {
-    const action = yield take(ADD_COMMENT);
-    const senderId = (yield select(getUserObject())).googleId || 'anonym';
-    const addCommentPayload = {
-      text: action.data.text,
-      recieverId: action.data.userId,
-      senderId,
-    };
-    yield call(addCommentRequest, addCommentPayload);
-  }
-}
-
-function* logoutRequest(comment) {
-  try {
-    const requestURL = API_ENDPOINT + horizon.user.logout();
-    const requestOptions = {
-      method: 'POST',
-      body: JSON.stringify(comment),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    yield call(request, requestURL, requestOptions);
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-function* logoutRequestWatcher() {
-  while (true) {
-    const action = yield take(REMOVE_LOGIN_DATA);
-    yield call(logoutRequest, { id: action.data });
+    yield take(GET_ALL_USERS);
+    yield call(getAllUsers);
   }
 }
 
 function* rootSaga() {
   yield [
     createUserRequestWatcher,
-    getUserByIDRequestWatcher,
-    getUsersWatcher,
-    addCommentRequestWatcher,
-    listeners,
-    logoutRequestWatcher,
+    getUserWatcher,
+    getAllUsersWatcher,
+    channels,
   ].map(saga => call(saga));
 }
 export default rootSaga;

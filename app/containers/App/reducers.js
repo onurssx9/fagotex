@@ -1,76 +1,44 @@
-/*
- * HomeReducer
- *
- * The reducer takes care of our data. Using actions, we can change our
- * application state.
- * To add a new action, add it to the switch statement in the reducer function
- *
- * Example:
- * case YOUR_ACTION_CONSTANT:
- *   return state.set('yourStateVariable', true);
- */
 import { fromJS } from 'immutable';
-
 import {
-  LOGIN,
-  USER_OBJECT,
-  SET_USERS,
-  UPDATE_USER,
-  SET_LOGIN_DATA,
-  REMOVE_LOGIN_DATA,
+  SET_CURRENT_USER,
+  SET_LOGOUT_CURRENT_USER,
+  SET_ALL_USERS,
+  FORK_USERS,
 } from './constants';
 
-const comments = () => ({
-  recieved: {},
-  sent: {},
-});
-
 const userObject = fromJS({
-  name: '',
-  googleId: '',
+  displayName: '',
+  photoURL: '',
   email: '',
-  imageUrl: '',
-  rating: 1,
-  rank: 0,
-  popularity: 0,
-  comments: comments(),
-  sessionId: localStorage.getItem('user-session') || '',
+  comments: [],
+  rating: [],
 });
 
 // The initial state of the App
 export const initialState = fromJS({
-  login: localStorage.getItem('user-session') !== null,
-  userObject,
-  userCards: {},
+  login: false,
+  userCards: [],
+  currentUser: userObject,
 });
 
 function globalReducer(state = initialState, action) {
   switch (action.type) {
-    case LOGIN:
-      return state.set('login', action.status);
-    case USER_OBJECT:
-    case SET_LOGIN_DATA:
-      return state.mergeDeep({
-        userObject: action.data,
-        login: localStorage.getItem('user-session') !== null,
-      });
-    case SET_USERS: {
-      const newUserCards = {};
-      Object.values(action.data).forEach(card => {
-        newUserCards[card.googleId] = userObject.mergeDeep(card);
-      });
-      return state.mergeDeep({
-        userCards: newUserCards,
-        userObject: newUserCards[state.getIn(['userObject', 'googleId'])] || {},
-      });
+    case SET_CURRENT_USER:
+      return state.mergeDeep({ currentUser: action.user, login: true });
+    case SET_LOGOUT_CURRENT_USER:
+      return state.set('currentUser', userObject).set('login', false);
+    case SET_ALL_USERS:
+      return state.mergeDeep({ userCards: action.users });
+    case FORK_USERS: {
+      const newState = state.set('userCards', fromJS(action.users));
+      const currentUser = action.users.find(
+        x => x.email === state.getIn(['currentUser', 'email']),
+      );
+      if (currentUser && currentUser !== null) {
+        return newState.setIn(['currentUser'], fromJS(currentUser));
+      }
+      return newState;
     }
-    case UPDATE_USER:
-      return state.mergeDeep({
-        userCards: action.data,
-        userObject: action.data[state.getIn(['userObject', 'googleId'])] || {},
-      });
-    case REMOVE_LOGIN_DATA:
-      return state.set('userObject', userObject);
     default:
       return state;
   }

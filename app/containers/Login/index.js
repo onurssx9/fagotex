@@ -4,25 +4,19 @@ import { compose, bindActionCreators } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { getLoginStatus } from '../App/selectors';
-import { changeLoginStatus } from '../App/actions';
-
 import ProfileCard from './ProfileCard';
+import { selectLoginStatus } from '../App/selectors';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Login extends React.PureComponent {
-  componentWillMount() {
-    const userSession = localStorage.getItem('user-session');
-    this.props.changeLoginStatus(userSession);
-  }
+  componentWillMount() {}
 
   static propTypes = {
-    changeLoginStatus: PropTypes.func,
-    login: PropTypes.any,
+    loginStatus: PropTypes.bool,
   };
 
   render() {
-    if (this.props.login) {
+    if (this.props.loginStatus) {
       return <Redirect to="/" />;
     }
     return <ProfileCard />;
@@ -30,10 +24,12 @@ export class Login extends React.PureComponent {
 }
 
 export function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ changeLoginStatus }, dispatch);
+  return bindActionCreators({}, dispatch);
 }
 
-const mapStateToProps = createStructuredSelector({ login: getLoginStatus() });
+const mapStateToProps = createStructuredSelector({
+  loginStatus: selectLoginStatus(),
+});
 
 const withConnect = connect(
   mapStateToProps,
