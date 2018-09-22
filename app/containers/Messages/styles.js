@@ -40,6 +40,11 @@ export const Delete = styled.button`
   outline: none;
   cursor: pointer;
   font-size: 10px;
+  padding: 0px;
+
+  svg {
+    pointer-events: none;
+  }
 `;
 
 export const Comments = styled.div`
