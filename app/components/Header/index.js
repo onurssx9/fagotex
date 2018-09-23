@@ -81,9 +81,9 @@ class Header extends React.PureComponent {
             <Link href to="/" />
             <FontAwesomeIcon icon="home" />
           </button>
-          <button active={(path === '/messages').toString()}>
-            <Link href to="/messages" />
-            <FontAwesomeIcon icon="comments" />
+          <button active={(path === '/profile').toString()}>
+            <Link href to="/profile" />
+            <FontAwesomeIcon icon="user" />
           </button>
           <Logout onClick={this.removeSessionId} className="logout">
             <FontAwesomeIcon icon="sign-out-alt" />

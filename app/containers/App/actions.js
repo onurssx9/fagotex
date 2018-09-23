@@ -5,8 +5,6 @@ import {
   GET_ALL_USERS,
   SET_ALL_USERS,
   FORK_USERS,
-  UPDATE_USER_COMMENTS,
-  UPDATE_USER_RATING,
 } from './constants';
 
 export const setCurrentUser = user => ({

@@ -45,7 +45,9 @@ export class Homepage extends React.PureComponent {
     return (
       <React.Fragment>
         <Header />
-        <People>{!!this.props.userCards.length && this.getUserCards()}</People>
+        <People>
+          {this.props.userCards.length > 0 && this.getUserCards()}
+        </People>
       </React.Fragment>
     );
   }

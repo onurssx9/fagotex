@@ -18,7 +18,7 @@ import RatingSender from './RatingSender';
 
 class UserCard extends React.PureComponent {
   state = {
-    commentCount: (() => this.props.user.comments.length)(),
+    commentCount: this.props.user.comments.length,
   };
 
   componentDidMount() {

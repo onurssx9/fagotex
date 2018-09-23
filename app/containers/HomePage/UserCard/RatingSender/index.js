@@ -10,7 +10,6 @@ import { RatingBox, Rate } from './styles';
 class RatingSender extends React.PureComponent {
   static propTypes = {
     userId: PropTypes.string,
-    active: PropTypes.bool,
     ratings: PropTypes.array,
     rating: PropTypes.number,
     comments: PropTypes.number,

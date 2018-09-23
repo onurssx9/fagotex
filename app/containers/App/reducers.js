@@ -12,6 +12,7 @@ const userObject = fromJS({
   email: '',
   comments: [],
   rating: [],
+  hashtags: [],
 });
 
 // The initial state of the App

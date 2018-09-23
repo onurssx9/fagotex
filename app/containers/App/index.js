@@ -8,14 +8,25 @@ import {
   faTrashAlt,
   faFire,
   faStar,
+  faUser,
+  faTag,
 } from '@fortawesome/free-solid-svg-icons';
 
 import Login from '../Login';
 import NotFoundPage from '../NotFoundPage/Loadable';
 import HomePage from '../HomePage';
-import Messages from '../Messages';
+import Profile from '../Profile';
 
-library.add([faHome, faComments, faSignOutAlt, faTrashAlt, faFire, faStar]);
+library.add([
+  faHome,
+  faComments,
+  faSignOutAlt,
+  faTrashAlt,
+  faFire,
+  faStar,
+  faUser,
+  faTag,
+]);
 
 export default function App() {
   return (
@@ -23,7 +34,7 @@ export default function App() {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/Login" component={Login} />
-        <Route path="/Messages" component={Messages} />
+        <Route path="/Profile" component={Profile} />
         <Route component={NotFoundPage} />
       </Switch>
     </React.Fragment>
